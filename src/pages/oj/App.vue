@@ -1,16 +1,17 @@
 <template>
   <div>
     <NavBar></NavBar>
+    <SideBar></SideBar>
     <div class="content-app">
       <transition name="fadeInUp" mode="out-in">
         <router-view></router-view>
       </transition>
-      <div class="footer">
-        <p v-html="website.website_footer"></p>
-        <p>Powered by <a href="https://github.com/QingdaoU/OnlineJudge">OnlineJudge</a>
-          <span v-if="version">&nbsp; Version: {{ version }}</span>
-        </p>
-      </div>
+    </div>
+    <div class="footer">
+      <p v-html="website.website_footer"></p>
+      <p>Powered by <a href="https://github.com/QingdaoU/OnlineJudge">OnlineJudge</a>
+        <span v-if="version">&nbsp; Version: {{ version }}</span>
+      </p>
     </div>
     <BackTop></BackTop>
   </div>
@@ -19,11 +20,13 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import NavBar from '@oj/components/NavBar.vue'
+  import SideBar from '@oj/components/SideBar.vue'
 
   export default {
     name: 'app',
     components: {
-      NavBar
+      NavBar,
+      SideBar
     },
     data () {
       return {
@@ -75,14 +78,17 @@
 
   .content-app {
     margin-top: 80px;
-    padding: 0 2%;
+    padding: 0  2% 0 20%;
   }
 
   .footer {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    text-align: center;
-    font-size: small;
+    position: fixed;
+    bottom: 2%;
+    left: 50%;
+    // margin-top: 20px;
+    // margin-bottom: 10px;
+    // text-align: center;
+    // font-size: small;
   }
 
   .fadeInUp-enter-active {

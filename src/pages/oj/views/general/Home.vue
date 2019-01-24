@@ -1,5 +1,5 @@
 <template>
-  <Row type="flex" justify="space-around">
+  <Row type="flex" justify="start">
     <Col :span="22">
     <panel shadow v-if="contests.length" class="contest">
       <div slot="title">

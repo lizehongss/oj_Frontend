@@ -51,6 +51,7 @@
     mounted () {
       let params = {status: CONTEST_STATUS.NOT_START}
       api.getContestList(0, 5, params).then(res => {
+        console.log(res)
         this.contests = res.data.data.results
       })
     },

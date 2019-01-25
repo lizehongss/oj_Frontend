@@ -59,7 +59,7 @@
   }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 
   * {
     -webkit-box-sizing: border-box;

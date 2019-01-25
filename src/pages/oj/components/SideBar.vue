@@ -1,6 +1,6 @@
 <template>
   <div id="sidebar">
-    <Menu theme="light"  @on-select="handleRoute" :active-name="activeMenu" class='oj-sideMenu'>
+    <Menu theme="dark"  @on-select="handleRoute" :active-name="activeMenu" class='oj-sideMenu'>
       <Menu-item name="/">
         <Icon type="home"></Icon>
         {{$t('m.Home')}}
@@ -73,5 +73,21 @@
     z-index:  1000;
     background-color: #fff;
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
+  }
+  // 更改侧栏样式
+  .ivu-menu-dark {
+    background-color: #001529;
+  }
+  // .ivu-menu-item {
+  //   color: #fff;
+  // }
+  .ivu-menu {
+    color: #fff;
+  }
+  .ivu-menu-vertical .ivu-menu-item:hover {
+    background: #000c17;
+  }
+   .ivu-menu-submenu-title:hover {
+    background: #000c17;
   }
 </style>

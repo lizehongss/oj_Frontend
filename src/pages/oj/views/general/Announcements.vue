@@ -1,11 +1,16 @@
 <template>
   <Panel shadow :padding="10">
     <div slot="title">
+      <Icon type="calendar"></Icon>
       {{title}}
     </div>
     <div slot="extra">
-      <Button v-if="listVisible" type="info" @click="init" :loading="btnLoading">{{$t('m.Refresh')}}</Button>
-      <Button v-else type="ghost" icon="ios-undo" @click="goBack">{{$t('m.Back')}}</Button>
+      <Button v-if="listVisible" type="primary" @click="init"  icon="ios-loop">
+        <Spin fix v-if="btnLoading">
+                <Icon type="ios-loop" size=18 class="demo-spin-icon-load"></Icon>
+        </Spin>
+      </Button>
+      <Button v-else type="ghost" icon="ios-undo" @click="goBack"></Button>
     </div>
 
     <transition-group name="announcement-animate" mode="in-out">
@@ -14,9 +19,9 @@
       </div>
       <template v-if="listVisible">
         <ul class="announcements-container" key="list">
-          <li v-for="announcement in announcements" :key="announcement.title">
+          <li v-for="announcement in announcements" :key="announcement.title" @click="goAnnouncement(announcement)">
             <div class="flex-container">
-              <div class="title"><a class="entry" @click="goAnnouncement(announcement)">
+              <div class="title"><a class="entry" >
                 {{announcement.title}}</a></div>
               <div class="date">{{announcement.create_time | localtime }}</div>
               <div class="creator"> By {{announcement.created_by.username}}</div>
@@ -116,6 +121,14 @@
 </script>
 
 <style scoped lang="less">
+    .demo-spin-icon-load{
+        animation: ani-demo-spin 1s linear infinite;
+    }
+    @keyframes ani-demo-spin {
+        from { transform: rotate(0deg);}
+        50%  { transform: rotate(180deg);}
+        to   { transform: rotate(360deg);}
+    }
   .announcements-container {
     margin-top: -10px;
     margin-bottom: 10px;
@@ -125,9 +138,16 @@
       padding-bottom: 15px;
       margin-left: 20px;
       font-size: 16px;
-      border-bottom: 1px solid rgba(187, 187, 187, 0.5);
-      &:last-child {
-        border-bottom: none;
+      border: 1px solid #ddd;
+      border-radius:  1%;
+      color: #635d5d;
+      cursor: pointer;
+      &:hover {
+        color: #2d8cf0;
+        border: 1px solid #2d8cf0;
+        .flex-container .title a.entry{
+          color: #2d8cf0;
+        }
       }
       .flex-container {
         .title {
@@ -135,11 +155,7 @@
           text-align: left;
           padding-left: 10px;
           a.entry {
-            color: #495060;
-            &:hover {
-              color: #2d8cf0;
-              border-bottom: 1px solid #2d8cf0;
-            }
+            color:#000;
           }
         }
         .creator {

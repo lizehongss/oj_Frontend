@@ -1,6 +1,6 @@
 <template>
   <div id="header">
-    <Menu theme="light" mode="horizontal" @on-select="handleRoute" :active-name="activeMenu" class="oj-menu">
+    <Menu theme="primary" mode="horizontal" @on-select="handleRoute" :active-name="activeMenu" class="oj-menu">
       <div class="logo"><span>{{website.website_name}}</span></div>
       <!-- <Menu-item name="/">
         <Icon type="home"></Icon>
@@ -44,13 +44,13 @@
       </Submenu> -->
       <template v-if="!isAuthenticated">
         <div class="btn-menu">
-          <Button type="ghost"
+          <Button type="primary"
                   ref="loginBtn"
                   shape="circle"
                   @click="handleBtnClick('login')">{{$t('m.Login')}}
           </Button>
           <Button v-if="website.allow_register"
-                  type="ghost"
+                  type="primary"
                   shape="circle"
                   @click="handleBtnClick('register')"
                   style="margin-left: 5px;">{{$t('m.Register')}}
@@ -139,7 +139,7 @@
     background-color: #fff;
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
     .oj-menu {
-      background: #fdfdfd;
+      background: #000;
     }
 
     .logo {
@@ -148,6 +148,7 @@
       font-size: 20px;
       float: left;
       line-height: 60px;
+      color: #fff;
     }
 
     .drop-menu {

@@ -2,7 +2,7 @@
   <Row type="flex" :gutter="18">
     <Col :span=19>
     <Panel shadow>
-      <div slot="title">Problem List</div>
+      <div slot="title">问题列表</div>
       <div slot="extra">
         <ul class="filter">
           <li>
@@ -11,17 +11,17 @@
                 <Icon type="arrow-down-b"></Icon>
               </span>
               <Dropdown-menu slot="list">
-                <Dropdown-item name="">All</Dropdown-item>
-                <Dropdown-item name="Low">Low</Dropdown-item>
-                <Dropdown-item name="Mid">Mid</Dropdown-item>
-                <Dropdown-item name="High">High</Dropdown-item>
+                <Dropdown-item name="">所有</Dropdown-item>
+                <Dropdown-item name="Low">难度低</Dropdown-item>
+                <Dropdown-item name="Mid">难度中</Dropdown-item>
+                <Dropdown-item name="High">难度高</Dropdown-item>
               </Dropdown-menu>
             </Dropdown>
           </li>
           <li>
             <i-switch size="large" @on-change="handleTagsVisible">
-              <span slot="open">Tags</span>
-              <span slot="close">Tags</span>
+              <span slot="open">标签</span>
+              <span slot="close">标签</span>
             </i-switch>
           </li>
           <li>
@@ -34,7 +34,7 @@
           <li>
             <Button type="info" @click="onReset">
               <Icon type="refresh"></Icon>
-              Reset
+              重置
             </Button>
           </li>
         </ul>

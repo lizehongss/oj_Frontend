@@ -137,6 +137,7 @@
       list-style: none;
       padding-bottom: 15px;
       margin-left: 20px;
+      margin-bottom: 10px;
       font-size: 16px;
       border: 1px solid #ddd;
       border-radius:  1%;
@@ -145,6 +146,7 @@
       &:hover {
         color: #2d8cf0;
         border: 1px solid #2d8cf0;
+        box-shadow: 5px 5px 5px #dddddd;
         .flex-container .title a.entry{
           color: #2d8cf0;
         }

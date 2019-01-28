@@ -1,12 +1,18 @@
 <template>
   <div>
     <NavBar></NavBar>
+    <Row>
+    <Col span="4">
     <SideBar></SideBar>
-    <div class="content-app">
+    </Col>
+    <Col span="20">
+    <div class="content-app" >
       <transition name="fadeInUp" mode="out-in">
         <router-view></router-view>
       </transition>
     </div>
+    </Col>
+    </Row>
     <div class="footer">
       <p v-html="website.website_footer"></p>
       <p>Powered by <a href="https://github.com/QingdaoU/OnlineJudge">OnlineJudge</a>
@@ -78,17 +84,18 @@
 
   .content-app {
     margin-top: 80px;
-    padding: 0  2% 0 20%;
+    // padding: 0  2% 0 20%;
+    padding: 0 2% 0 0;
   }
 
   .footer {
-    position: fixed;
-    bottom: 2%;
-    left: 50%;
-    // margin-top: 20px;
-    // margin-bottom: 10px;
-    // text-align: center;
-    // font-size: small;
+    // position: fixed;
+    // bottom: 2%;
+    // left: 50%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: small;
   }
 
   .fadeInUp-enter-active {

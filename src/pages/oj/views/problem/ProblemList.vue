@@ -1,20 +1,20 @@
 <template>
   <Row type="flex" :gutter="18">
-    <Col :span=19>
+    <Col :span="19">
     <Panel shadow>
       <div slot="title">问题列表</div>
       <div slot="extra">
         <ul class="filter">
           <li>
             <Dropdown @on-click="filterByDifficulty">
-              <span>{{query.difficulty === '' ? 'Difficulty' : query.difficulty}}
+              <span>{{query.difficulty === '' ? '所有' : this.difficultyMap[query.difficulty]}}
                 <Icon type="arrow-down-b"></Icon>
               </span>
               <Dropdown-menu slot="list">
                 <Dropdown-item name="">所有</Dropdown-item>
-                <Dropdown-item name="Low">难度低</Dropdown-item>
-                <Dropdown-item name="Mid">难度中</Dropdown-item>
-                <Dropdown-item name="High">难度高</Dropdown-item>
+                <Dropdown-item name="Low">低</Dropdown-item>
+                <Dropdown-item name="Mid">中</Dropdown-item>
+                <Dropdown-item name="High">高</Dropdown-item>
               </Dropdown-menu>
             </Dropdown>
           </li>
@@ -28,7 +28,7 @@
             <Input v-model="query.keyword"
                    @on-enter="filterByKeyword"
                    @on-click="filterByKeyword"
-                   placeholder="keyword"
+                   placeholder="关键词"
                    icon="ios-search-strong"/>
           </li>
           <li>
@@ -43,6 +43,7 @@
              :columns="problemTableColumns"
              :data="problemList"
              :loading="loadings.table"
+             no-data-text="暂无数据"
              disabled-hover></Table>
     </Panel>
     <Pagination :total="total" :page-size="limit" @on-change="pushRouter" :current.sync="query.page"></Pagination>
@@ -51,19 +52,20 @@
 
     <Col :span="5">
     <Panel :padding="10">
-      <div slot="title" class="taglist-title">Tags</div>
+      <div slot="title" class="taglist-title">标签</div>
       <Button v-for="tag in tagList"
               :key="tag.name"
               @click="filterByTag(tag.name)"
-              type="ghost"
+              type="info"
               :disabled="query.tag === tag.name"
               shape="circle"
+              size="small"
               class="tag-btn">{{tag.name}}
       </Button>
 
       <Button long id="pick-one" @click="pickone">
         <Icon type="shuffle"></Icon>
-        Pick one
+        随机选择
       </Button>
     </Panel>
     <Spin v-if="loadings.tag" fix size="large"></Spin>
@@ -143,7 +145,7 @@
                 props: {
                   color: color
                 }
-              }, params.row.difficulty)
+              }, this.difficultyMap[params.row.difficulty])
             }
           },
           {
@@ -170,6 +172,11 @@
           difficulty: '',
           tag: '',
           page: 1
+        },
+        difficultyMap: {
+          'Low': '低',
+          'Mid': '中',
+          'High': '高'
         }
       }
     },
@@ -286,13 +293,16 @@
 
 <style scoped lang="less">
   .taglist-title {
-    margin-left: -10px;
+    margin-left: -20px;
     margin-bottom: -10px;
   }
 
   .tag-btn {
     margin-right: 5px;
     margin-bottom: 10px;
+  }
+  .tag-no {
+    text-align: center;
   }
 
   #pick-one {

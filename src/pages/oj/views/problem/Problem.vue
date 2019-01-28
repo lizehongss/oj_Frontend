@@ -1,7 +1,9 @@
 <template>
   <div class="flex-container">
     <div id="problem-main">
-      <!--problem main-->
+      <Tabs value="one" @on-click="showCodeMirror">
+        <Button type="ghost" icon="ios-undo" @click="goBack" slot="extra"></Button>
+        <TabPane label="题目详情" name="one">
       <Panel :padding="40" shadow>
         <div slot="title">{{problem.title}}</div>
         <div id="problem-content" class="markdown-body" v-katex>
@@ -48,12 +50,14 @@
 
         </div>
       </Panel>
-      <!--problem main end-->
+        </TabPane>
+        <TabPane label="代码输入" name="two">
       <Card :padding="20" id="submit-code" dis-hover>
         <CodeMirror :value.sync="code"
                     :languages="problem.languages"
                     :language="language"
                     :theme="theme"
+                    v-if="codeMirrorShow"
                     @resetCode="onResetToTemplate"
                     @changeTheme="onChangeTheme"
                     @changeLang="onChangeLang"></CodeMirror>
@@ -80,7 +84,6 @@
               <Alert type="warning" show-icon>Contest has ended</Alert>
             </div>
           </Col>
-
           <Col :span="12">
             <template v-if="captchaRequired">
               <div class="captcha-container">
@@ -99,6 +102,8 @@
           </Col>
         </Row>
       </Card>
+        </TabPane>
+      </Tabs>
     </div>
 
     <div id="right-column">
@@ -229,6 +234,7 @@
         theme: 'solarized',
         submissionId: '',
         submitted: false,
+        codeMirrorShow: false,
         result: {
           result: 9
         },
@@ -271,6 +277,12 @@
     },
     methods: {
       ...mapActions(['changeDomTitle']),
+      goBack () {
+        this.$router.back(-1)
+      },
+      showCodeMirror (val) {
+        if (val === 'two') this.codeMirrorShow = true
+      },
       init () {
         this.$Loading.start()
         this.contestID = this.$route.params.contestID
@@ -353,11 +365,13 @@
       },
       onResetToTemplate () {
         this.$Modal.confirm({
-          content: 'Are you sure you want to reset your code?',
+          content: '你确定重置你的代码吗?',
           onOk: () => {
             let template = this.problem.template
             if (template && template[this.language]) {
               this.code = template[this.language]
+            } else {
+              this.code = ''
             }
           }
         })

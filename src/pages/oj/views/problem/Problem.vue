@@ -103,11 +103,8 @@
         </Row>
       </Card>
         </TabPane>
-      </Tabs>
-    </div>
-
-    <div id="right-column">
-      <VerticalMenu @on-click="handleRoute">
+        <TabPane label="题目信息">
+                <VerticalMenu @on-click="handleRoute">
         <template v-if="this.contestID">
           <VerticalMenu-item :route="{name: 'contest-problem-list', params: {contestID: contestID}}">
             <Icon type="ios-photos"></Icon>
@@ -137,7 +134,7 @@
           </VerticalMenu-item>
         </template>
       </VerticalMenu>
-
+          <div class="tab_left">
       <Card id="info">
         <div slot="title" class="header">
           <Icon type="information-circled"></Icon>
@@ -165,37 +162,76 @@
           <li>
             <p>{{$t('m.Tags')}}</p>
             <p>
-              <Poptip trigger="hover" placement="left-end">
-                <a>Show</a>
-                <div slot="content">
-                  <Tag v-for="tag in problem.tags" :key="tag">{{tag}}</Tag>
-                </div>
-              </Poptip>
             </p>
+          </li>
+          <li>
+            <Tag v-for="tag in problem.tags" :key="tag">{{tag}}</Tag>
           </li>
         </ul>
       </Card>
-
+          </div>
+          <div class="tab_right">
       <Card id="pieChart" :padding="0" v-if="!this.contestID || OIContestRealTimePermission">
         <div slot="title">
           <Icon type="ios-analytics"></Icon>
-          <span class="card-title">Statistic</span>
-          <Button type="ghost" size="small" id="detail" @click="graphVisible = !graphVisible">Details</Button>
+          <span class="card-title">提交信息</span>
+          <!-- <Button type="ghost" size="small" id="detail" @click="graphVisible = !graphVisible">Details</Button> -->
         </div>
+        <div class="pieChart_content">
         <div class="echarts">
-          <ECharts :options="pie"></ECharts>
+          <ECharts :options="largePie"></ECharts>
+        </div>
+        <div class="ac_total">
+          <ul>
+            <li>
+              <p>Comoile Error</p>
+              <p >{{ac_total.CE}}</p>
+            </li>
+            <li>
+              <p>Runtime Error</p>
+              <p>{{ac_total.RE}}</p>
+            </li>
+            <li>
+              <p>Wrong Answer</p>
+              <p>{{ac_total.WA}}</p>
+            </li>
+            <li>
+              <p>Time Limit Exceeded</p>
+              <p>{{ac_total.TLE}}</p>
+            </li>
+            <li>
+              <p>Accepted	</p>
+              <p>{{ac_total.AC}}</p>
+            </li>
+            <li>
+              <p>Memory Limit Exceeded</p>
+              <p>{{ac_total.MLE}}</p>
+            </li>
+            <li>
+              <p>Partial Accepted</p>
+              <p>{{ac_total.PAC}}</p>
+            </li>
+          </ul>
+        </div>
         </div>
       </Card>
+          </div>
+        </TabPane>
+      </Tabs>
     </div>
 
-    <Modal v-model="graphVisible">
+    <!-- <div id="right-column">
+
+    </div> -->
+
+    <!-- <Modal v-model="graphVisible">
       <div id="pieChart-detail">
         <ECharts :options="largePie" :initOptions="largePieInitOpts"></ECharts>
       </div>
       <div slot="footer">
         <Button type="ghost" @click="graphVisible=false">Close</Button>
       </div>
-    </Modal>
+    </Modal> -->
   </div>
 </template>
 
@@ -256,6 +292,15 @@
         largePieInitOpts: {
           width: '500',
           height: '480'
+        },
+        ac_total: {
+          CE: '-',
+          RE: '-',
+          WA: '-',
+          TLE: '-',
+          AC: '-',
+          MLE: '-',
+          PAC: '-'
         }
       }
     },
@@ -337,7 +382,11 @@
           legend.push('AC', 'WA')
         }
         this.largePie.legend.data = legend
-
+        let totalList = JSON.parse(JSON.stringify(problemData.statistic_info))
+        Object.keys(totalList).forEach(ele => {
+          this.ac_total[JUDGE_STATUS[ele].short] = totalList[ele]
+        })
+        console.log(this.ac_total)
         // 把ac的数据提取出来放在最后
         let acCount = problemData.statistic_info['0']
         delete problemData.statistic_info['0']
@@ -524,6 +573,10 @@
     #problem-main {
       flex: auto;
       margin-right: 18px;
+      .tab_left, .tab_right {
+        float: left;
+        margin-top: 10px;
+      }
     }
     #right-column {
       flex: none;
@@ -586,8 +639,7 @@
   }
 
   #info {
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin-right: 20px;
     ul {
       list-style-type: none;
       li {
@@ -611,9 +663,33 @@
   }
 
   #pieChart {
+    .pieChart_content{
+      display: flex;
+      justify-content: center;
+      align-items: center;
     .echarts {
-      height: 250px;
-      width: 210px;
+      height: 290px;
+      width: 500px;
+    }
+    .ac_total{
+      ul {
+        list-style-type: none;
+        li {
+          border-bottom: 1px dotted #e9eaec;
+          margin-bottom: 10px;
+        }
+        p {
+          display: inline-block;
+        }
+        p:first-child {
+          width: 200px;
+        }
+        p:last-child {
+          float:right;
+          margin-right: 20px;
+        }
+      }
+    }
     }
     #detail {
       position: absolute;

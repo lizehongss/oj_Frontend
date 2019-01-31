@@ -5,12 +5,9 @@
       {{title}}
     </div>
     <div slot="extra">
-      <Button v-if="listVisible" type="primary" @click="init"  icon="ios-loop">
-        <Spin fix v-if="btnLoading">
-                <Icon type="ios-loop" size=18 class="demo-spin-icon-load"></Icon>
-        </Spin>
+      <Button v-if="listVisible"  :loading="btnLoading" type="primary" @click="init"  icon="ios-loading">
       </Button>
-      <Button v-else type="ghost" icon="ios-undo" @click="goBack"></Button>
+      <Button v-else type="primary" icon="ios-arrow-back" @click="goBack"></Button>
     </div>
 
     <transition-group name="announcement-animate" mode="in-out">
@@ -21,10 +18,14 @@
         <ul class="announcements-container" key="list">
           <li v-for="announcement in announcements" :key="announcement.title" @click="goAnnouncement(announcement)">
             <div class="flex-container">
-              <div class="title"><a class="entry" >
-                {{announcement.title}}</a></div>
-              <div class="date">{{announcement.create_time | localtime }}</div>
-              <div class="creator"> By {{announcement.created_by.username}}</div>
+            <Icon type="ios-briefcase-outline" size="40" />
+            <div class="container-right">
+               <div class="title">{{announcement.title}}</div>
+               <div class="info">
+                 <span class="date">{{announcement.create_time | localtime}}</span>
+                 <span class="creator">By {{announcement.created_by.username}}</span>
+               </div>
+            </div>
             </div>
           </li>
         </ul>
@@ -133,42 +134,34 @@
     margin-top: -10px;
     margin-bottom: 10px;
     li {
-      padding-top: 15px;
       list-style: none;
-      padding-bottom: 15px;
+      padding: 10px 10px;
       margin-left: 20px;
       margin-bottom: 10px;
       font-size: 16px;
-      border: 1px solid #ddd;
+      // border: 1px solid #dddee1;
       border-radius:  1%;
-      color: #635d5d;
+      color: #2d8cf0;
       cursor: pointer;
       &:hover {
-        color: #2d8cf0;
-        border: 1px solid #2d8cf0;
-        box-shadow: 5px 5px 5px #dddddd;
-        .flex-container .title a.entry{
-          color: #2d8cf0;
-        }
+        box-shadow: 0 1px 6px rgba(0,0,0,.2)
       }
       .flex-container {
-        .title {
-          flex: 1 1;
-          text-align: left;
-          padding-left: 10px;
-          a.entry {
-            color:#000;
+        display: flex;
+        width: 100%;
+        max-width: 100%;
+        justify-content: flex-start;
+        align-items: center;
+        flex-flow: row nowrap;
+        .container-right{
+          margin-left: 20px;
+          .title{
+            font-size: 20px;
           }
-        }
-        .creator {
-          flex: none;
-          width: 200px;
-          text-align: center;
-        }
-        .date {
-          flex: none;
-          width: 200px;
-          text-align: center;
+          .info{
+            font-size: 14px; 
+            color: #000;
+          }
         }
       }
     }

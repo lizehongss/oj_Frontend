@@ -2,7 +2,7 @@
   <div class="flex-container">
     <div id="problem-main">
       <Tabs value="one" @on-click="showCodeMirror">
-        <Button type="ghost" icon="ios-undo" @click="goBack" slot="extra"></Button>
+        <Button type="primary"  icon="ios-arrow-back" @click="goBack" slot="extra"></Button>
         <TabPane label="题目详情" name="one">
       <Panel :padding="40" shadow>
         <div slot="title">{{problem.title}}</div>
@@ -104,36 +104,7 @@
       </Card>
         </TabPane>
         <TabPane label="题目信息">
-                <VerticalMenu @on-click="handleRoute">
-        <template v-if="this.contestID">
-          <VerticalMenu-item :route="{name: 'contest-problem-list', params: {contestID: contestID}}">
-            <Icon type="ios-photos"></Icon>
-            Problems
-          </VerticalMenu-item>
-
-          <VerticalMenu-item :route="{name: 'contest-announcement-list', params: {contestID: contestID}}">
-            <Icon type="chatbubble-working"></Icon>
-            Announcements
-          </VerticalMenu-item>
-        </template>
-
-        <VerticalMenu-item v-if="!this.contestID || OIContestRealTimePermission" :route="submissionRoute">
-          <Icon type="navicon-round"></Icon>
-          Submissions
-        </VerticalMenu-item>
-
-        <template v-if="this.contestID">
-          <VerticalMenu-item v-if="!this.contestID || OIContestRealTimePermission"
-                             :route="{name: 'contest-rank', params: {contestID: contestID}}">
-            <Icon type="stats-bars"></Icon>
-            Rankings
-          </VerticalMenu-item>
-          <VerticalMenu-item :route="{name: 'contest-details', params: {contestID: contestID}}">
-            <Icon type="home"></Icon>
-            View Contest
-          </VerticalMenu-item>
-        </template>
-      </VerticalMenu>
+                
           <div class="tab_left">
       <Card id="info">
         <div slot="title" class="header">
@@ -221,7 +192,36 @@
     </div>
 
     <!-- <div id="right-column">
+<VerticalMenu @on-click="handleRoute">
+        <template v-if="this.contestID">
+          <VerticalMenu-item :route="{name: 'contest-problem-list', params: {contestID: contestID}}">
+            <Icon type="ios-photos"></Icon>
+            Problems
+          </VerticalMenu-item>
 
+          <VerticalMenu-item :route="{name: 'contest-announcement-list', params: {contestID: contestID}}">
+            <Icon type="chatbubble-working"></Icon>
+            Announcements
+          </VerticalMenu-item>
+        </template>
+
+        <VerticalMenu-item v-if="!this.contestID || OIContestRealTimePermission" :route="submissionRoute">
+          <Icon type="navicon-round"></Icon>
+          Submissions
+        </VerticalMenu-item>
+
+        <template v-if="this.contestID">
+          <VerticalMenu-item v-if="!this.contestID || OIContestRealTimePermission"
+                             :route="{name: 'contest-rank', params: {contestID: contestID}}">
+            <Icon type="stats-bars"></Icon>
+            Rankings
+          </VerticalMenu-item>
+          <VerticalMenu-item :route="{name: 'contest-details', params: {contestID: contestID}}">
+            <Icon type="home"></Icon>
+            View Contest
+          </VerticalMenu-item>
+        </template>
+      </VerticalMenu>
     </div> -->
 
     <!-- <Modal v-model="graphVisible">

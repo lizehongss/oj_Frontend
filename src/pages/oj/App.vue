@@ -86,6 +86,7 @@
     margin-top: 80px;
     // padding: 0  2% 0 20%;
     padding: 0 2% 0 0;
+    margin-left:20px;
   }
 
   .footer {

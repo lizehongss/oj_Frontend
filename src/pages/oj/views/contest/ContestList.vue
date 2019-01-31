@@ -2,7 +2,11 @@
   <Row type="flex">
     <Col :span="24">
     <Panel id="contest-card" shadow>
-      <div slot="title">{{query.rule_type === '' ? 'All' : query.rule_type}} Contests</div>
+      <!-- <div slot="title">{{query.rule_type === '' ? '所有' : query.rule_type}}内容</div> -->
+      <div slot="title">
+        <Icon type="md-text" size="30" />
+        实验内容/比赛
+      </div>
       <div slot="extra">
         <ul class="filter">
           <li>
@@ -40,7 +44,8 @@
       <ol id="contest-list">
         <li v-for="contest in contests" :key="contest.title">
           <Row type="flex" justify="space-between" align="middle">
-            <img class="trophy" src="../../../../assets/Cup.png"/>
+            <!-- <img class="trophy" src="../../../../assets/Cup.png"/> -->
+            <Icon type="logo-steam" />
             <Col :span="18" class="contest-main">
             <p class="title">
               <a class="entry" @click.stop="goContest(contest)">

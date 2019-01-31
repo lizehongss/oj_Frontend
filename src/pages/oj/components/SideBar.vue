@@ -1,8 +1,8 @@
 <template>
   <div id="sidebar">
-    <Menu theme="dark"  @on-select="handleRoute" :active-name="activeMenu" class='oj-sideMenu'>
+    <Menu theme="dark"  @on-select="handleRoute" :active-name="activeMenu" class='oj-sideMenu' width="auto">
       <Menu-item name="/">
-        <Icon type="home"></Icon>
+        <Icon type="ios-home"></Icon>
         {{$t('m.Home')}}
       </Menu-item>
       <Menu-item name="/problems">
@@ -10,16 +10,16 @@
         {{$t('m.NavProblems')}}
       </Menu-item>
       <Menu-item name="/contests">
-        <Icon type="trophy"></Icon>
+        <Icon type="ios-trophy"></Icon>
         {{$t('m.Contests')}}
       </Menu-item>
       <Menu-item name="/status">
-        <Icon type="ios-pulse-strong"></Icon>
+        <Icon type="ios-pulse"></Icon>
         {{$t('m.NavStatus')}}
       </Menu-item>
       <Submenu name="rank">
         <template slot="title">
-          <Icon type="podium"></Icon>
+          <Icon type="ios-podium"></Icon>
           {{$t('m.Rank')}}
         </template>
         <Menu-item name="/acm-rank">
@@ -31,7 +31,7 @@
       </Submenu>
       <Submenu name="about">
         <template slot="title">
-          <Icon type="information-circled"></Icon>
+          <Icon type="ios-information-circle"></Icon>
           {{$t('m.About')}}
         </template>
         <Menu-item name="/about">

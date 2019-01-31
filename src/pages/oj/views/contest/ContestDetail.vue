@@ -35,15 +35,15 @@
     <div v-show="showMenu" id="contest-menu">
       <VerticalMenu @on-click="handleRoute">
         <VerticalMenu-item :route="{name: 'contest-details', params: {contestID: contestID}}">
-          <Icon type="home"></Icon>
+          <Icon type="ios-home"></Icon>
           {{$t('m.Overview')}}
         </VerticalMenu-item>
 
-        <VerticalMenu-item :disabled="contestMenuDisabled"
+        <!-- <VerticalMenu-item :disabled="contestMenuDisabled"
                            :route="{name: 'contest-announcement-list', params: {contestID: contestID}}">
-          <Icon type="chatbubble-working"></Icon>
+          <Icon type="md-briefcase"></Icon>
           {{$t('m.Announcements')}}
-        </VerticalMenu-item>
+        </VerticalMenu-item> -->
 
         <VerticalMenu-item :disabled="contestMenuDisabled"
                            :route="{name: 'contest-problem-list', params: {contestID: contestID}}">
@@ -54,14 +54,14 @@
         <VerticalMenu-item v-if="OIContestRealTimePermission"
                            :disabled="contestMenuDisabled"
                            :route="{name: 'contest-submission-list'}">
-          <Icon type="navicon-round"></Icon>
+          <Icon type="md-pulse"></Icon>
           {{$t('m.Submissions')}}
         </VerticalMenu-item>
 
         <VerticalMenu-item v-if="OIContestRealTimePermission"
                            :disabled="contestMenuDisabled"
                            :route="{name: 'contest-rank', params: {contestID: contestID}}">
-          <Icon type="stats-bars"></Icon>
+          <Icon type="md-podium"></Icon>
           {{$t('m.Rankings')}}
         </VerticalMenu-item>
 

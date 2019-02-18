@@ -7,6 +7,10 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/en'
 
+import iView from 'iview'
+// import locale from 'iview/dist/locale/en-US'
+import 'iview/dist/styles/iview.css'
+
 import filters from '@/utils/filters'
 import router from './router'
 import { GOOGLE_ANALYTICS_ID } from '@/utils/constants'
@@ -23,7 +27,7 @@ import './style.less'
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
-
+Vue.use(iView)
 Vue.use(VueAnalytics, {
   id: GOOGLE_ANALYTICS_ID,
   router

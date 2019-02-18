@@ -1,65 +1,65 @@
 <template>
-  <el-row type="flex" :gutter="20">
-    <el-col :md="10" :lg="8">
-      <el-card class="admin-info">
-        <el-row :gutter="20">
-          <el-col :span="10">
+  <Row type="flex" :gutter="20">
+    <Col :md="10" :lg="8">
+      <Card class="admin-info">
+        <Row :gutter="20">
+          <Col :span="10">
             <img class="avatar" :src="profile.avatar"/>
-          </el-col>
-          <el-col :span="14">
+          </Col>
+          <Col :span="14">
             <p class="admin-info-name">{{user.username}}</p>
             <p>{{user.admin_type}}</p>
-          </el-col>
-        </el-row>
+          </Col>
+        </Row>
         <hr/>
         <div class="last-info">
           <p class="last-info-title">{{$t('m.Last_Login')}}</p>
-          <el-form label-width="80px" class="last-info-body">
-            <el-form-item label="Time:">
+          <Form :label-width="80" class="last-info-body">
+            <FormItem label="Time:">
               <span>{{session.last_activity | localtime}}</span>
-            </el-form-item>
-            <el-form-item label="IP:">
+            </FormItem>
+            <FormItem label="IP:">
               <span>{{session.ip}}</span>
-            </el-form-item>
-            <el-form-item label="OS">
+            </FormItem>
+            <FormItem label="OS:">
               <span>{{os}}</span>
-            </el-form-item>
-            <el-form-item label="Browser:">
+            </FormItem>
+            <FormItem label="Browser:">
               <span>{{browser}}</span>
-            </el-form-item>
-          </el-form>
+            </FormItem>
+          </Form>
         </div>
-      </el-card>
+      </Card>
       <panel :title="$t('m.System_Overview')" v-if="isSuperAdmin">
         <p>{{$t('m.DashBoardJudge_Server')}}:  {{infoData.judge_server_count}}</p>
         <p>{{$t('m.HTTPS_Status')}}:
-          <el-tag :type="https ? 'success' : 'danger'" size="small">
+          <Tag :color="httpsColor" size="small">
             {{ https ? 'Enabled' : 'Disabled'}}
-          </el-tag>
+          </Tag>
         </p>
         <p>{{$t('m.Force_HTTPS')}}:
-          <el-tag :type="forceHttps ? 'success' : 'danger'" size="small">
+          <Tag :color="foreceHttpsColor" size="small">
             {{forceHttps ? 'Enabled' : 'Disabled'}}
-          </el-tag>
+          </Tag>
         </p>
         <p>{{$t('m.CDN_HOST')}}:
-          <el-tag :type="cdn ? 'success' : 'warning'" size="small">
+          <Tag :color="cdnColor" size="small">
             {{cdn ? cdn : 'Not Use'}}
-          </el-tag>
+          </Tag>
         </p>
       </panel>
-    </el-col>
+    </Col>
 
-    <el-col :md="14" :lg="16" v-if="isSuperAdmin">
+    <Col :md="14" :lg="16" v-if="isSuperAdmin">
       <div class="info-container">
-        <info-card color="#909399" icon="el-icon-fa-users" message="Total Users" iconSize="30px" class="info-item"
+        <info-card color="#909399" icon="ios-contact" message="Total Users" iconSize="65" class="info-item"
                    :value="infoData.user_count"></info-card>
-        <info-card color="#67C23A" icon="el-icon-fa-list" message="Today Submissions" class="info-item"
+        <info-card color="#67C23A" icon="ios-list" message="Today Submissions" class="info-item"
                    :value="infoData.today_submission_count"></info-card>
-        <info-card color="#409EFF" icon="el-icon-fa-trophy" message="Recent Contests" class="info-item"
+        <info-card color="#409EFF" icon="ios-apps" message="Recent Contests" class="info-item"
                    :value="infoData.recent_contest_count"></info-card>
       </div>
-      <panel style="margin-top: 5px">
+      <!-- <panel style="margin-top: 5px">
         <span slot="title" v-loading="loadingReleases">Release Notes
         <el-popover placement="right" trigger="hover">
           <i slot="reference" class="el-icon-fa-question-circle import-user-icon"></i>
@@ -87,9 +87,9 @@
             </div>
           </el-collapse-item>
         </el-collapse>
-      </panel>
-    </el-col>
-  </el-row>
+      </panel> -->
+    </Col>
+  </Row>
 </template>
 
 
@@ -116,7 +116,10 @@
         activeNames: [1],
         session: {},
         loadingReleases: true,
-        releases: []
+        releases: [],
+        httpsColor: this.https ? 'success' : 'error',
+        foreceHttpsColor: this.forceHttps ? 'success' : 'error',
+        cdnColor: this.cdn ? 'success' : 'warning'
       }
     },
     mounted () {
@@ -196,13 +199,9 @@
       max-width: 100%;
     }
     .last-info {
+      // margin-top: 5px; 
       &-title {
         font-size: 16px;
-      }
-      &-body {
-        .el-form-item {
-          margin-bottom: 5px;
-        }
       }
     }
   }

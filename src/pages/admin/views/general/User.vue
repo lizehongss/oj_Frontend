@@ -2,19 +2,19 @@
   <div class="view">
     <Panel :title="$t('m.User_User') ">
       <div slot="header">
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <el-button v-show="selectedUsers.length"
+        <Row :gutter="20">
+          <Col :span="8">
+            <Button v-show="selectedUsers.length"
                        type="warning" icon="el-icon-fa-trash"
                        @click="deleteUsers(selectedUserIDs)">Delete
-            </el-button>
-          </el-col>
-          <el-col :span="selectedUsers.length ? 16: 24">
-            <el-input v-model="keyword" prefix-icon="el-icon-search" placeholder="Keywords"></el-input>
-          </el-col>
-        </el-row>
+            </Button>
+          </Col>
+          <Col :span="selectedUsers.length ? 16: 24">
+            <Input suffix="ios-search" placeholder="keywords" v-model="keyword" />
+          </Col>
+        </Row>
       </div>
-      <el-table
+      <!-- <el-table
         v-loading="loadingTable"
         element-loading-text="loading"
         @selection-change="handleSelectionChange"
@@ -55,7 +55,22 @@
             <icon-btn name="Delete" icon="trash" @click.native="deleteUsers([row.id])"></icon-btn>
           </template>
         </el-table-column>
-      </el-table>
+      </el-table> -->
+      <Table :loading="loadingTable" @on-selection-change="handleSelectionChange" ref="table" :data="userList" :columns="columns">
+        <template slot-scope="{ row }" slot="creatTime">
+           {{row.create_time | localtime}}
+        </template>
+        <template slot-scope="{ row }" slot="lastLogin">
+            {{row.last_login | localtime}}
+        </template>
+        <template slot-scope="{ row }" slot="userType">
+          {{row.admin_type}}
+        </template>
+        <template slot-scope="{ row }" slot="option">
+          <Button icon="ios-brush" @click.native="openUserDialog(row.id)"></Button>
+          <Button icon="ios-trash" @click.native="deletUsers([row.id])"></Button>
+        </template>
+      </Table>
       <div class="panel-options">
         <el-pagination
           class="page"
@@ -122,34 +137,34 @@
 
     <Panel :title="$t('m.Generate_User')">
       <el-form :model="formGenerateUser" ref="formGenerateUser">
-        <el-row type="flex" justify="space-between">
-          <el-col :span="4">
+        <Row type="flex" justify="space-between">
+          <Col :span="4">
             <el-form-item label="Prefix" prop="prefix">
               <el-input v-model="formGenerateUser.prefix" placeholder="Prefix"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="4">
+          </Col>
+          <Col :span="4">
             <el-form-item label="Suffix" prop="suffix">
               <el-input v-model="formGenerateUser.suffix" placeholder="Suffix"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="4">
+          </Col>
+          <Col :span="4">
             <el-form-item label="Start Number" prop="number_from" required>
               <el-input-number v-model="formGenerateUser.number_from" style="width: 100%"></el-input-number>
             </el-form-item>
-          </el-col>
-          <el-col :span="4">
+          </Col>
+          <Col :span="4">
             <el-form-item label="End Number" prop="number_to" required>
               <el-input-number v-model="formGenerateUser.number_to" style="width: 100%"></el-input-number>
             </el-form-item>
-          </el-col>
-          <el-col :span="4">
+          </Col>
+          <Col :span="4">
             <el-form-item label="Password Length" prop="password_length" required>
               <el-input v-model="formGenerateUser.password_length"
                         placeholder="Password Length"></el-input>
             </el-form-item>
-          </el-col>
-        </el-row>
+          </Col>
+        </Row>
 
         <el-form-item>
           <el-button type="primary" @click="generateUser" icon="el-icon-fa-users" :loading="loadingGenerate">Generate & Export
@@ -170,28 +185,28 @@
     <!--对话框-->
     <el-dialog :title="$t('m.User_Info')" :visible.sync="showUserDialog" :close-on-click-modal="false">
       <el-form :model="user" label-width="120px" label-position="left">
-        <el-row :gutter="20">
-          <el-col :span="12">
+        <Row :gutter="20">
+          <Col :span="12">
             <el-form-item :label="$t('m.User_Username')" required>
               <el-input v-model="user.username"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="12">
+          </Col>
+          <Col :span="12">
             <el-form-item :label="$t('m.User_Real_Name')" required>
               <el-input v-model="user.real_name"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="12">
+          </Col>
+          <Col :span="12">
             <el-form-item :label="$t('m.User_Email')" required>
               <el-input v-model="user.email"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="12">
+          </Col>
+          <Col :span="12">
             <el-form-item :label="$t('m.User_New_Password')">
               <el-input v-model="user.password"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="12">
+          </Col>
+          <Col :span="12">
             <el-form-item :label="$t('m.User_Type')">
               <el-select v-model="user.admin_type">
                 <el-option label="Regular User" value="Regular User"></el-option>
@@ -199,8 +214,8 @@
                 <el-option label="Super Admin" value="Super Admin"></el-option>
               </el-select>
             </el-form-item>
-          </el-col>
-          <el-col :span="12">
+          </Col>
+          <Col :span="12">
             <el-form-item :label="$t('m.Problem_Permission')">
               <el-select v-model="user.problem_permission" :disabled="user.admin_type!=='Admin'">
                 <el-option label="None" value="None"></el-option>
@@ -208,8 +223,8 @@
                 <el-option label="All" value="All"></el-option>
               </el-select>
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
+          </Col>
+          <Col :span="8">
             <el-form-item :label="$t('m.Two_Factor_Auth')">
               <el-switch
                 v-model="user.two_factor_auth"
@@ -218,8 +233,8 @@
                 inactive-color="#ff4949">
               </el-switch>
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
+          </Col>
+          <Col :span="8">
             <el-form-item label="Open Api">
               <el-switch
                 v-model="user.open_api"
@@ -227,8 +242,8 @@
                 inactive-color="#ff4949">
               </el-switch>
             </el-form-item>
-          </el-col>
-          <el-col :span="8">
+          </Col>
+          <Col :span="8">
             <el-form-item :label="$t('m.Is_Disabled')">
               <el-switch
                 v-model="user.is_disabled"
@@ -236,8 +251,8 @@
                 inactive-text="">
               </el-switch>
             </el-form-item>
-          </el-col>
-        </el-row>
+          </Col>
+        </Row>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <cancel @click.native="showUserDialog = false">Cancel</cancel>
@@ -283,7 +298,49 @@
           number_from: 0,
           number_to: 0,
           password_length: 8
-        }
+        },
+        columns: [
+          {
+            type: 'selection',
+            width: 60,
+            align: 'center'
+          },
+          {
+            title: 'ID',
+            key: 'id'
+          },
+          {
+            title: 'Username',
+            key: 'username'
+          },
+          {
+            title: 'Create Time',
+            slot: 'creatTime',
+            key: 'create_time'
+          },
+          {
+            title: 'Last Login',
+            slot: 'lastLogin',
+            key: 'last_login'
+          },
+          {
+            title: 'Real Name',
+            key: 'real_name'
+          },
+          {
+            title: 'Email',
+            key: 'email'
+          },
+          {
+            title: 'User Type',
+            slot: 'userType',
+            key: 'admin_type'
+          },
+          {
+            title: 'Option',
+            slot: 'option'
+          }
+        ]
       }
     },
     mounted () {

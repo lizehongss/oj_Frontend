@@ -1,6 +1,6 @@
 export const m = {
   // SideMenu.vue
-  Dashboard: '仪表盘',
+  Dashboard: '系统数据',
   General: '常用设置',
   User: '用户管理',
   Announcement: '公告管理',

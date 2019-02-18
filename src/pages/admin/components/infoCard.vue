@@ -1,15 +1,16 @@
 <template>
-  <el-card :body-style="{padding: 0, height: '100%'}" class="info-card">
-    <el-row type="flex" class="info-card-container">
-      <el-col :span="8" :style="{'background-color': color}" class="height-100">
-        <i :class="['info-card-icon', icon]" :style="{'font-size': iconSize}"></i>
-      </el-col>
-      <el-col :span="16" class="info-card-text">
+  <Card :body-style="{padding: 0, height: '100%'}" class="info-card">
+    <Row type="flex" class="info-card-container">
+      <Col :span="8" :style="{'background-color': color}" class="height-100">
+        <!-- <i :class="['ivu-icon', icon]" :size="iconSize"></i> -->
+        <Icon :type="icon" :size="iconSize"></Icon>
+      </Col>
+      <Col :span="16" class="info-card-text">
         <p :style="textStyle">{{value}}</p>
         <p style="font-weight: 300;">{{message}}</p>
-      </el-col>
-    </el-row>
-  </el-card>
+      </Col>
+    </Row>
+  </Card>
 </template>
 
 <script>
@@ -22,7 +23,7 @@
       icon: String,
       iconSize: {
         type: String,
-        default: '35px'
+        default: '60'
       },
       countSize: {
         type: String,

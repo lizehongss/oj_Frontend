@@ -1,33 +1,29 @@
 <template>
-  <el-menu class="vertical_menu"
-           :router="true" :default-active="currentPath">
-    <div class="logo">
-      <img src="../../../assets/logo.svg" alt="oj admin"/>
-    </div>
-    <el-menu-item index="/"><i class="el-icon-fa-dashboard"></i>{{$t('m.Dashboard')}}</el-menu-item>
-    <el-submenu v-if="isSuperAdmin" index="general">
-      <template slot="title"><i class="el-icon-menu"></i>{{$t('m.General')}}</template>
-      <el-menu-item index="/user">{{$t('m.User')}}</el-menu-item>
-      <el-menu-item index="/announcement">{{$t('m.Announcement')}}</el-menu-item>
-      <el-menu-item index="/conf">{{$t('m.System_Config')}}</el-menu-item>
-      <el-menu-item index="/judge-server">{{$t('m.Judge_Server')}}</el-menu-item>
-      <el-menu-item index="/prune-test-case">{{$t('m.Prune_Test_Case')}}</el-menu-item>
-    </el-submenu>
-    <el-submenu index="problem" v-if="hasProblemPermission">
-      <template slot="title"><i class="el-icon-fa-bars"></i>{{$t('m.Problem')}}</template>
-      <el-menu-item index="/problems">{{$t('m.Problem_List')}}</el-menu-item>
-      <el-menu-item index="/problem/create">{{$t('m.Create_Problem')}}</el-menu-item>
-      <el-menu-item index="/problem/batch_ops">{{$t('m.Export_Import_Problem')}}</el-menu-item>
+  <Menu class="vertical_menu" @on-select="handleRoute" :active-name="currentPath">
+    <div class="logo">实验平台后台</div>
+    <Menu-item name="/"><Icon type=""></Icon>{{$t('m.Dashboard')}}</Menu-item>
+    <Submenu v-if="isSuperAdmin" name="general">
+      <template slot="title"><Icon type=""></Icon>{{$t('m.General')}}</template>
+      <Menu-item name="/user">{{$t('m.User')}}</Menu-item>
+      <Menu-item name="/announcement">{{$t('m.Announcement')}}</Menu-item>
+      <Menu-item name="/conf">{{$t('m.System_Config')}}</Menu-item>
+      <Menu-item name="/judge-server">{{$t('m.Judge_Server')}}</Menu-item>
+      <Menu-item name="/prune-test-case">{{$t('m.Prune_Test_Case')}}</Menu-item>
+    </Submenu>
+    <Submenu name="problem" v-if="hasProblemPermission">
+      <template slot="title"><Icon type=""></Icon>{{$t('m.Problem')}}</template>
+      <Menu-item name="/problems">{{$t('m.Problem_List')}}</Menu-item>
+      <Menu-item name="/problem/create">{{$t('m.Create_Problem')}}</Menu-item>
+      <Menu-item name="/problem/batch_ops">{{$t('m.Export_Import_Problem')}}</Menu-item>
 
-    </el-submenu>
-    <el-submenu index="contest">
-      <template slot="title"><i class="el-icon-fa-trophy"></i>{{$t('m.Contest')}}</template>
-      <el-menu-item index="/contest">{{$t('m.Contest_List')}}</el-menu-item>
-      <el-menu-item index="/contest/create">{{$t('m.Create_Contest')}}</el-menu-item>
-    </el-submenu>
-  </el-menu>
+    </Submenu>
+    <Submenu name="contest">
+      <template slot="title"><Icon type=""></Icon>{{$t('m.Contest')}}</template>
+      <Menu-item name="/contest">{{$t('m.Contest_List')}}</Menu-item>
+      <Menu-item name="/contest/create">{{$t('m.Create_Contest')}}</Menu-item>
+    </Submenu>
+  </Menu>
 </template>
-
 <script>
   import {mapGetters} from 'vuex'
 
@@ -43,6 +39,11 @@
     },
     computed: {
       ...mapGetters(['user', 'isSuperAdmin', 'hasProblemPermission'])
+    },
+    methods: {
+      handleRoute (route) {
+        this.$router.push(route)
+      }
     }
   }
 </script>
@@ -60,13 +61,16 @@
     .logo {
       margin: 20px 0;
       text-align: center;
-      img {
-        background-color: #fff;
-        border-radius: 50%;
-        border: 3px solid #fff;
-        width: 75px;
-        height: 75px;
-      }
+      font-size: 20px;
+      color: #2d8cf0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      // img {
+      //   background-color: #fff;
+      //   border-radius: 50%;
+      //   border: 3px solid #fff;
+      //   width: 75px;
+      //   height: 75px;
+      // }
     }
   }
 </style>

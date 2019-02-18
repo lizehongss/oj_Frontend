@@ -5,13 +5,22 @@
     </div>
     <div id="header">
       <i class="el-icon-fa-font katex-editor" @click="katexVisible=true" ></i>
-      <screen-full :width="14" :height="14" class="screen-full"></screen-full>
-      <el-dropdown @command="handleCommand">
+      <!-- <screen-full :width="14" :height="14" class="screen-full"></screen-full>s -->
+      <!-- <el-dropdown @command="handleCommand">
         <span>{{user.username}}<i class="el-icon-caret-bottom el-icon--right"></i></span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="logout">Logout</el-dropdown-item>
         </el-dropdown-menu>
-      </el-dropdown>
+      </el-dropdown> -->
+      <Dropdown @on-click="handleCommand">
+        <a href="javascript: void(0)">
+          {{user.username}}
+          <Icon type="ios-arrow-down"></Icon>
+        </a>
+        <DropdownMenu slot="list">
+          <DropdownItem name="logout">退出登录</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
     </div>
     <div class="content-app">
       <transition name="fadeInUp" mode="out-in">
@@ -22,9 +31,13 @@
       </div>
     </div>
 
-    <el-dialog title="Latex Editor" :visible.sync="katexVisible">
+    <!-- <el-dialog title="Latex Editor" :visible.sync="katexVisible">
       <KatexEditor></KatexEditor>
-    </el-dialog>
+    </el-dialog> -->
+    <Modal title="Latex Editor" v-model="katexVisible">
+      <KatexEditor></KatexEditor>
+        <div slot="footer"></div>
+    </Modal>
   </div>
 </template>
 
@@ -118,7 +131,7 @@
   .content-app {
     padding-top: 20px;
     padding-right: 10px;
-    padding-left: 210px;
+    padding-left: 250px;
   }
 
   .footer {

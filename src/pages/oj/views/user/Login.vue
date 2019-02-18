@@ -3,12 +3,12 @@
     <Form ref="formLogin" :model="formLogin" :rules="ruleLogin">
       <FormItem prop="username">
         <Input type="text" v-model="formLogin.username" :placeholder="$t('m.LoginUsername')" size="large" @on-enter="handleLogin">
-        <Icon type="ios-person-outline" slot="prepend"></Icon>
+        <Icon type="ios-person" slot="prepend"></Icon>
         </Input>
       </FormItem>
       <FormItem prop="password">
         <Input type="password" v-model="formLogin.password" :placeholder="$t('m.LoginPassword')" size="large" @on-enter="handleLogin">
-        <Icon type="ios-locked-outline" slot="prepend"></Icon>
+        <Icon type="ios-lock" slot="prepend"></Icon>
         </Input>
       </FormItem>
       <FormItem prop="tfa_code" v-if="tfaRequired">
@@ -26,7 +26,7 @@
         {{$t('m.UserLogin')}}
       </Button>
       <a v-if="website.allow_register" @click.stop="handleBtnClick('register')">{{$t('m.No_Account')}}</a>
-      <a @click.stop="goResetPassword" style="float: right">{{$t('m.Forget_Password')}}</a>
+      <a @click.stop="goResetPassword">{{$t('m.Forget_Password')}}</a>
     </div>
   </div>
 </template>
@@ -58,11 +58,11 @@
         },
         ruleLogin: {
           username: [
-            {required: true, trigger: 'blur'},
+            {required: true, trigger: 'blur', message: '用户名不能为空'},
             {validator: CheckRequiredTFA, trigger: 'blur'}
           ],
           password: [
-            {required: true, trigger: 'change', min: 6, max: 20}
+            {required: true, trigger: 'change', message: '密码不能为空', min: 6, max: 20}
           ]
         }
       }

@@ -17,7 +17,11 @@
         <Icon type="ios-pulse"></Icon>
         {{$t('m.NavStatus')}}
       </Menu-item>
-      <Submenu name="rank">
+      <Menu-item name="/oi-rank">
+        <Icon type="ios-podium"></Icon>
+        {{$t('m.OI_Rank')}}
+      </Menu-item>
+      <!-- <Submenu name="rank">
         <template slot="title">
           <Icon type="ios-podium"></Icon>
           {{$t('m.Rank')}}
@@ -28,8 +32,8 @@
         <Menu-item name="/oi-rank">
           {{$t('m.OI_Rank')}}
         </Menu-item>
-      </Submenu>
-      <Submenu name="about">
+      </Submenu> -->
+      <!-- <Submenu name="about">
         <template slot="title">
           <Icon type="ios-information-circle"></Icon>
           {{$t('m.About')}}
@@ -40,7 +44,7 @@
         <Menu-item name="/FAQ">
           {{$t('m.FAQ')}}
         </Menu-item>
-      </Submenu>
+      </Submenu> -->
     </Menu>
   </div>
 </template>

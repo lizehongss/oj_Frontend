@@ -2,15 +2,22 @@
   <Row type="flex" justify="space-around">
     <Col :span="22">
     <Panel :padding="10">
-      <div slot="title">OI Ranklist</div>
-      <div class="echarts">
+      <div slot="title">
+      <Select v-model="listShowSelect" style="width: 200px; margin-left: 20px;" @on-change="selectChange">
+        <Option value="chartList">图表显示</Option>
+        <Option value="tableList">列表显示</Option>
+      </Select>
+      </div>
+      <div class="echarts" v-if="showChart">
         <ECharts :options="options" ref="chart" auto-resize></ECharts>
       </div>
     </Panel>
+    <div class="table" v-if="!showChart">
     <Table :data="dataRank" :columns="columns" size="large"></Table>
     <Pagination :total="total" :page-size.sync="limit" :current.sync="page"
                 @on-change="getRankData"
                 show-sizer @on-page-size-change="getRankData(1)"></Pagination>
+    </div>
     </Col>
   </Row>
 </template>
@@ -32,6 +39,8 @@
         limit: 30,
         total: 0,
         dataRank: [],
+        listShowSelect: 'chartList',
+        showChart: true,
         columns: [
           {
             align: 'center',
@@ -154,6 +163,13 @@
       this.getRankData(1)
     },
     methods: {
+      selectChange (value) {
+        if (value === 'chartList') {
+          this.showChart = true
+        } else {
+          this.showChart = false
+        }
+      },
       getRankData (page) {
         let offset = (page - 1) * this.limit
         let bar = this.$refs.chart

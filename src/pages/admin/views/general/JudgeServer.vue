@@ -4,7 +4,25 @@
       <code>{{ token }}</code>
     </Panel>
     <Panel :title="$t('m.Judge_Server_Info')">
-      <el-table
+      <Table :data="servers" border :columns="columns ">
+        <template slot-scope="{ row }" slot="status">
+          <Tag v-if="row.status === 'normal'" color="success">Normal</Tag>
+          <Tag v-else color="error">Abnormal</Tag>
+        </template>
+        <template slot-scope="{ row }" slot="cpu_usage">
+          {{ row.cpu_usage }}%
+        </template>
+        <template slot-scope="{ row }" slot="memory_usage">
+          {{ row.memory_usage }} %
+        </template>
+        <template slot-scope="{ row }" slot="disabled">
+          <i-switch v-model="row.is_disabled" @on-change="handleDisabledSwitch(row.id, row.is_disabled)"></i-switch>
+        </template>
+        <template slot-scope="{ row }" slot="options">
+          <Button name="Deleete" icon="ios-trash" @click.native="deleteJudgeServer(row.hostname)"></Button>
+        </template>
+      </Table>
+      <!-- <el-table
         :data="servers"
         :default-expand-all="true"
         border>
@@ -65,21 +83,73 @@
             <icon-btn name="Delete" icon="trash" @click.native="deleteJudgeServer(scope.row.hostname)"></icon-btn>
           </template>
         </el-table-column>
-      </el-table>
+      </el-table> -->
     </Panel>
   </div>
 </template>
 
 <script>
   import api from '../../api.js'
+  import Tableexpand from '../../components/Tableexpand.vue'
 
   export default {
     name: 'JudgeServer',
+    components: {
+      Tableexpand
+    },
     data () {
       return {
         servers: [],
         token: '',
-        intervalId: -1
+        intervalId: -1,
+        columns: [
+          {
+            type: 'expand',
+            width: 50,
+            render: (h, params) => {
+              return h(Tableexpand, {
+                props: {
+                  item: params.row
+                }
+              })
+            }
+          },
+          {
+            title: 'Status',
+            key: 'status',
+            slot: 'status'
+          },
+          {
+            title: 'Hostname',
+            key: 'hostname'
+          },
+          {
+            title: 'Task Number',
+            key: 'task_number'
+          },
+          {
+            title: 'CPU Core',
+            key: 'cpu_core'
+          },
+          {
+            title: 'CPU Usage',
+            key: 'cpu_usage',
+            slot: 'cpu_usage'
+          },
+          {
+            title: 'Memory Usage',
+            key: 'memory_usage',
+            slot: 'memory_usage'
+          },
+          {
+            title: 'Disabled',
+            slot: 'disabled'
+          },
+          {
+            title: 'Options',
+            slot: 'options'
+          }
+        ]
       }
     },
     mounted () {

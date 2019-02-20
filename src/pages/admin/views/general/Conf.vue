@@ -1,6 +1,6 @@
 <template>
   <div class="view">
-    <Panel :title="$t('m.SMTP_Config')">
+    <!-- <Panel :title="$t('m.SMTP_Config')">
       <el-form label-position="left" label-width="70px" :model="smtp">
         <el-row :gutter="20">
           <el-col :span="12">
@@ -37,55 +37,54 @@
       <el-button type="primary" @click="saveSMTPConfig">Save</el-button>
       <el-button type="warning" @click="testSMTPConfig"
                  v-if="saved" :loading="loadingBtnTest">Send Test Email</el-button>
-    </Panel>
+    </Panel> -->
 
     <Panel :title="$t('m.Website_Config')">
-      <el-form label-position="left" label-width="100px" ref="form" :model="websiteConfig">
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <el-form-item :label="$t('m.Base_Url')" required>
-              <el-input v-model="websiteConfig.website_base_url" placeholder="Website Base Url"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item :label="$t('m.Name')" required>
-              <el-input v-model="websiteConfig.website_name" placeholder="Website Name"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item :label="$t('m.Shortcut')" required>
-              <el-input v-model="websiteConfig.website_name_shortcut" placeholder="Website Name Shortcut"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item :label="$t('m.Footer')" required>
-              <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="websiteConfig.website_footer"
-                        placeholder="Website Footer HTML"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-col :span="12">
-              <el-form-item :label="$t('m.Allow_Register')" label-width="200px">
-                <el-switch
+      <Form label-position="left" label-width="100px" ref="form" :model="websiteConfig">
+        <Row :gutter="20">
+          <Col :span="8">
+            <FormItem :label="$t('m.Base_Url')" required>
+              <Input v-model="websiteConfig.website_base_url" placeholder="Website Base Url"></Input>
+            </FormItem>
+          </Col>
+          <Col :span="8">
+            <FormItem :label="$t('m.Name')" required>
+              <Input v-model="websiteConfig.website_name" placeholder="Website Name"></Input>
+            </FormItem>
+          </Col>
+          <Col :span="8">
+            <FormItem :label="$t('m.Shortcut')" required>
+              <Input v-model="websiteConfig.website_name_shortcut" placeholder="Website Name Shortcut"></Input>
+            </FormItem>
+          </Col>
+          <Col :span="24">
+            <FormItem :label="$t('m.Footer')" required>
+              <Input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="websiteConfig.website_footer"
+                        placeholder="Website Footer HTML"></Input>
+            </FormItem>
+          </Col>
+          <Col :span="24">
+            <Col :span="12">
+              <FormItem :label="$t('m.Allow_Register')" label-width="200px">
+                <i-switch
                   v-model="websiteConfig.allow_register"
-                  active-color="#13ce66"
-                  inactive-color="#ff4949">
-                </el-switch>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item :label="$t('m.Submission_List_Show_All')" label-width="200px">
-                <el-switch
+                >
+                </i-switch>
+              </FormItem>
+            </Col>
+            <Col :span="12">
+              <FormItem :label="$t('m.Submission_List_Show_All')" label-width="200px">
+                <i-switch
                   v-model="websiteConfig.submission_list_show_all"
-                  active-color="#13ce66"
-                  inactive-color="#ff4949">
-                </el-switch>
-              </el-form-item>
-            </el-col>
-          </el-col>
-        </el-row>
-      </el-form>
-      <save @click.native="saveWebsiteConfig"></save>
+                >
+                </i-switch>
+              </FormItem>
+            </Col>
+          </Col>
+        </Row>
+      </Form>
+      <!-- <save @click.native="saveWebsiteConfig"></save> -->
+      <Button @click.native="saveWebsiteConfig" type="primary">保存</Button>
     </Panel>
   </div>
 </template>
@@ -111,14 +110,14 @@
       }
     },
     mounted () {
-      api.getSMTPConfig().then(res => {
-        if (res.data.data) {
-          this.smtp = res.data.data
-        } else {
-          this.init = true
-          this.$warning('Please setup SMTP config at first')
-        }
-      })
+      // api.getSMTPConfig().then(res => {
+      //   if (res.data.data) {
+      //     this.smtp = res.data.data
+      //   } else {
+      //     this.init = true
+      //     this.$warning('Please setup SMTP config at first')
+      //   }
+      // })
       api.getWebsiteConfig().then(res => {
         this.websiteConfig = res.data.data
       }).catch(() => {

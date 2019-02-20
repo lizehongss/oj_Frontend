@@ -2,13 +2,43 @@
   <div class="view">
     <Panel :title="contestId ? 'Contest Problem List' : 'Problem List'">
       <div slot="header">
-        <el-input
+        <Input
           v-model="keyword"
-          prefix-icon="el-icon-search"
+          suffix="ios-search"
           placeholder="Keywords">
-        </el-input>
+        </Input>
       </div>
-      <el-table
+      <Table :loading="loading" ref="table" :data="problemList" @on-row-dblclick="handleDblclick" :columns="columns" style="width: 100%">
+        <template slot-scope="{ row }" slot="display_id">
+          <span v-show="!row.isEditing">{{row._id}}</span>
+          <Input v-show="row.isEditing" v-model="row._id"
+                 @on-keyup="handleInlineEdit(row)"></Input>
+        </template>
+        <template slot-scope="{ row }" slot="title">
+          <span v-show="!row.isEditing">{{row.title}}</span>
+          <Input v-show="row.isEditing" v-model="row.title"
+                @on-keyup="handleInlineEdit(row)"></Input>
+        </template>
+        <template slot-scope="{ row }" slot="created_by">
+          {{row.created_by.username}}
+        </template>
+        <template slot-scope="{ row }" slot="create_time">
+          {{row.create_time | localtime}}
+        </template>
+        <template slot-scope="{ row }" slot="visible">
+          <i-switch v-model="row.visible" @on-change="updateProblem(scope.row)"></i-switch>
+        </template>
+        <template slot-scope="{ row }" slot='operation'>
+          <Button name="Edit" icon="ios-brush" @click.native="goEdit(row.id)"></Button>
+          <Button v-if="contestId" name="Make Public" icon=""
+                  @click.native="makeContestProblemPublic(row.id)"
+          ></Button>
+          <Button name="Download TestCase" icon="ios-cloud-download" @click.native="downloadTestCase(row.id)"></Button>
+          <Button name="Delete Problem" icon="ios-trash" @click.native="deleteProblem(row.id)"></Button>
+        </template>
+
+      </Table>
+      <!-- <el-table
         v-loading="loading"
         element-loading-text="loading"
         ref="table"
@@ -79,22 +109,29 @@
                       @click.native="deleteProblem(scope.row.id)"></icon-btn>
           </div>
         </el-table-column>
-      </el-table>
+      </el-table> -->
       <div class="panel-options">
-        <el-button type="primary" size="small"
-                   @click="goCreateProblem" icon="el-icon-plus">Create
-        </el-button>
-        <el-button v-if="contestId" type="primary"
-                   size="small" icon="el-icon-plus"
+        <Button type="primary" 
+                   @click="goCreateProblem" icon="md-add">Create
+        </Button>
+        <Button v-if="contestId" type="primary"
+                    icon="el-icon-plus"
                    @click="addProblemDialogVisible = true">Add From Public Problem
-        </el-button>
-        <el-pagination
+        </Button>
+        <!-- <el-pagination
           class="page"
           layout="prev, pager, next"
           @current-change="currentChange"
           :page-size="pageSize"
           :total="total">
-        </el-pagination>
+        </el-pagination> -->
+        <Page 
+          :total="total"
+          class="page"
+          size="small"
+          :page-size="pageSize"
+          @on-change="currentChange"
+        ></Page>
       </div>
     </Panel>
     <el-dialog title="Sure to update the problem? "
@@ -145,7 +182,41 @@
         currentRow: {},
         InlineEditDialogVisible: false,
         makePublicDialogVisible: false,
-        addProblemDialogVisible: false
+        addProblemDialogVisible: false,
+        columns: [
+          {
+            title: 'ID',
+            key: 'id'
+          },
+          {
+            title: 'Display ID',
+            slot: 'display_id'
+          },
+          {
+            title: 'Title',
+            key: 'title',
+            slot: 'title'
+          },
+          {
+            title: 'Author',
+            key: 'created_by',
+            slot: 'created_by'
+          },
+          {
+            title: 'Create Time',
+            key: 'create_time',
+            slot: 'create_time'
+          },
+          {
+            title: 'Visible',
+            key: 'visible',
+            slot: 'visible'
+          },
+          {
+            title: 'Operation',
+            slot: 'operation'
+          }
+        ]
       }
     },
     mounted () {
@@ -155,6 +226,7 @@
     },
     methods: {
       handleDblclick (row) {
+        debugger
         row.isEditing = true
       },
       goEdit (problemId) {

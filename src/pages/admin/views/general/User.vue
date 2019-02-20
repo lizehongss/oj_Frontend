@@ -85,7 +85,7 @@
           class="page"
           size="small"
           :page-size="pageSize"
-          @on-change="pageSize"
+          @on-change="currentChange"
         ></Page>
       </div>
     </Panel>

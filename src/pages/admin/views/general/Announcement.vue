@@ -2,7 +2,27 @@
   <div class="announcement view">
     <Panel :title="$t('m.General_Announcement')">
       <div class="list">
-        <el-table
+        <Table ref="table" :data="announcementList" :loading="loading" :columns="columns">
+          <template slot-scope="{ row }" slot="create_time">
+            {{row.create_time | localtime}}
+          </template>
+          <template slot-scope="{ row }" slot="last_update_time">
+            {{row.last_update_time | localtime}}
+          </template>
+          <template slot-scope="{ row }" slot="author">
+            {{row.created_by.username}}
+          </template>
+          <template slot-scope="{ row }" slot="visible">
+            <i-switch v-model="row.visible"
+                      @on-change="handleVisibleSwitch(row)">
+            </i-switch>
+          </template>
+          <template slot-scope="{ row }" slot="option">
+            <Button name="Edit" icon="ios-brush" @click.native="openAnnouncementDialog(row.id)"/>
+            <Button name="Delete" icon='ios-trash' @click.native="deleteAnnouncement(row.id)"/>
+          </template>
+        </Table>
+        <!-- <el-table
           v-loading="loading"
           element-loading-text="loading"
           ref="table"
@@ -56,47 +76,57 @@
               <icon-btn name="Delete" icon="trash" @click.native="deleteAnnouncement(scope.row.id)"></icon-btn>
             </div>
           </el-table-column>
-        </el-table>
+        </el-table> -->
         <div class="panel-options">
-          <el-button type="primary" size="small" @click="openAnnouncementDialog(null)" icon="el-icon-plus">Create</el-button>
-          <el-pagination
+          <!-- <el-button type="primary" size="small" @click="openAnnouncementDialog(null)" icon="el-icon-plus">Create</el-button> -->
+          <Button type="primary"  @click="openAnnouncementDialog(null)" icon="ios-add">Create</Button>
+          <!-- <el-pagination
             v-if="!contestID"
             class="page"
             layout="prev, pager, next"
             @current-change="currentChange"
             :page-size="pageSize"
             :total="total">
-          </el-pagination>
+          </el-pagination> -->
+          <Page
+            v-if="!contestID"
+            class="page"
+            size="small"
+            :page-size="pageSize"
+            @on-change="currentChange"
+            :total="total"
+          ></Page>
         </div>
       </div>
     </Panel>
     <!--对话框-->
-    <el-dialog :title="announcementDialogTitle" :visible.sync="showEditAnnouncementDialog"
-               @open="onOpenEditDialog" :close-on-click-modal="false">
-      <el-form label-position="top">
-        <el-form-item :label="$t('m.Announcement_Title')" required>
-          <el-input
+    <Modal :title="announcementDialogTitle" v-model="showEditAnnouncementDialog"
+               @on-visible-change="onOpenEditDialog" :close-on-click-modal="false">
+      <Form label-position="top">
+        <FormItem :label="$t('m.Announcement_Title')" required>
+          <Input
             v-model="announcement.title"
             :placeholder="$t('m.Announcement_Title')" class="title-input">
-          </el-input>
-        </el-form-item>
-        <el-form-item :label="$t('m.Announcement_Content')" required>
+          </Input>
+        </FormItem>
+        <FormItem :label="$t('m.Announcement_Content')" required>
           <Simditor v-model="announcement.content"></Simditor>
-        </el-form-item>
+        </FormItem>
         <div class="visible-box">
           <span>{{$t('m.Announcement_Status')}}</span>
-          <el-switch
+          <i-switch
             v-model="announcement.visible"
-            active-text=""
-            inactive-text="">
-          </el-switch>
+            >
+          </i-switch>
         </div>
-      </el-form>
+      </Form>
       <span slot="footer" class="dialog-footer">
-          <cancel @click.native="showEditAnnouncementDialog = false"></cancel>
-          <save type="primary" @click.native="submitAnnouncement"></save>
+          <!-- <cancel @click.native="showEditAnnouncementDialog = false"></cancel>
+          <save type="primary" @click.native="submitAnnouncement"></save> -->
+          <Button type="primary" @click.native="showEditAnnouncementDialog=false">取消</Button>
+          <Button type="primary" @click.native="submitAnnouncement">确定</Button>
         </span>
-    </el-dialog>
+    </Modal>
   </div>
 </template>
 
@@ -134,7 +164,41 @@
         // 是否显示loading
         loading: true,
         // 当前页码
-        currentPage: 0
+        currentPage: 0,
+        columns: [
+          {
+            title: 'ID',
+            key: 'id'
+          },
+          {
+            title: 'Title',
+            key: 'title'
+          },
+          {
+            title: 'CreateTime',
+            key: 'create_time',
+            slot: 'create_time'
+          },
+          {
+            title: 'LastUpdateTime',
+            key: 'last_update_time',
+            slot: 'last_update_time'
+          },
+          {
+            title: 'Author',
+            key: 'created_by',
+            slot: 'author'
+          },
+          {
+            title: 'Visible',
+            key: 'visible',
+            slot: 'visible'
+          },
+          {
+            title: 'Option',
+            slot: 'option'
+          }
+        ]
       }
     },
     mounted () {
@@ -174,18 +238,20 @@
         })
       },
       // 打开编辑对话框的回调
-      onOpenEditDialog () {
+      onOpenEditDialog (value) {
         // todo 优化
         // 暂时解决 文本编辑器显示异常bug
-        setTimeout(() => {
-          if (document.createEvent) {
-            let event = document.createEvent('HTMLEvents')
-            event.initEvent('resize', true, true)
-            window.dispatchEvent(event)
-          } else if (document.createEventObject) {
-            window.fireEvent('onresize')
-          }
-        }, 0)
+        if (value) {
+          setTimeout(() => {
+            if (document.createEvent) {
+              let event = document.createEvent('HTMLEvents')
+              event.initEvent('resize', true, true)
+              window.dispatchEvent(event)
+            } else if (document.createEventObject) {
+              window.fireEvent('onresize')
+            }
+          }, 0)
+        }
       },
       // 提交编辑
       // 默认传入MouseEvent
@@ -272,7 +338,7 @@
   }
 
   .visible-box {
-    margin-top: 10px;
+    margin-top: -10px;
     width: 205px;
     float: left;
   }

@@ -1,4 +1,5 @@
 <template>
+<!-- 学号没完成 -->
   <div class="view">
     <Panel :title="$t('m.User_User') ">
       <div slot="header">
@@ -68,36 +69,61 @@
         </template>
         <template slot-scope="{ row }" slot="option">
           <Button icon="ios-brush" @click.native="openUserDialog(row.id)"></Button>
-          <Button icon="ios-trash" @click.native="deletUsers([row.id])"></Button>
+          <Button icon="ios-trash" @click.native="deleteUsers([row.id])"></Button>
         </template>
       </Table>
       <div class="panel-options">
-        <el-pagination
+        <!-- <el-pagination
           class="page"
           layout="prev, pager, next"
           @current-change="currentChange"
           :page-size="pageSize"
           :total="total">
-        </el-pagination>
+        </el-pagination> -->
+        <Page 
+          :total="total"
+          class="page"
+          size="small"
+          :page-size="pageSize"
+          @on-change="pageSize"
+        ></Page>
       </div>
     </Panel>
 
     <Panel>
       <span slot="title">{{$t('m.Import_User')}}
-        <el-popover placement="right" trigger="hover">
+        <!-- <el-popover placement="right" trigger="hover">
           <p>Only support csv file without headers, check the <a
             href="http://docs.onlinejudge.me/#/onlinejudge/guide/import_users">link</a> for details</p>
           <i slot="reference" class="el-icon-fa-question-circle import-user-icon"></i>
-        </el-popover>
+        </el-popover> -->
+        <Poptip trigger="hover" title="" content="仅支持CSV格式">
+          <Icon type="ios-help-circle-outline"></Icon>
+        </Poptip>
       </span>
-      <el-upload v-if="!uploadUsers.length"
+      <!-- <el-upload v-if="!uploadUsers.length"
                  action=""
                  :show-file-list="false"
                  accept=".csv"
                  :before-upload="handleUsersCSV">
         <el-button size="small" icon="el-icon-fa-upload" type="primary">Choose File</el-button>
-      </el-upload>
+      </el-upload> -->
+      <Upload 
+        v-if="!uploadUsers.length"
+        type="drag"
+        action=""
+        accept=".csv"
+        :before-upload="handleUsersCSV"
+        :show-upload-list="false"
+        >
+          <div style="padding: 20px 0">
+            <Icon type="ios-cloud-upload" size="50" style="color: #3399ff"></Icon>
+            <p>点击或拖动到这里上传</p>
+          </div>
+        </Upload>
       <template v-else>
+        <!-- <Table :data="uploadUsersPage" :colums="Usercolumns">
+        </Table> -->
         <el-table :data="uploadUsersPage">
           <el-table-column label="Username">
             <template slot-scope="{row}">
@@ -116,59 +142,69 @@
           </el-table-column>
         </el-table>
         <div class="panel-options">
-          <el-button type="primary" size="small"
+          <!-- <el-button type="primary" size="small"
                      icon="el-icon-fa-upload"
                      @click="handleUsersUpload">Import All
           </el-button>
           <el-button type="warning" size="small"
                      icon="el-icon-fa-undo"
                      @click="handleResetData">Reset Data
-          </el-button>
-          <el-pagination
+          </el-button> -->
+          <!-- <el-pagination
             class="page"
             layout="prev, pager, next"
             :page-size="uploadUsersPageSize"
             :current-page.sync="uploadUsersCurrentPage"
             :total="uploadUsers.length">
-          </el-pagination>
+          </el-pagination> -->
+          <Button type="primary" size="small" @click="handleUsersUpload">Import All</Button>
+          <Button type="primary" size="small" @click="handleResetData">Rest Data</Button>
+          <Page
+            :total='uploadUsers.length'
+            class="page"
+            :page-size="uploadUsersPageSize"
+            @on-change="uploadUsersCurrentPage"
+            >
+          </Page>
         </div>
       </template>
     </Panel>
 
     <Panel :title="$t('m.Generate_User')">
-      <el-form :model="formGenerateUser" ref="formGenerateUser">
+      <Form :model="formGenerateUser" ref="formGenerateUser">
         <Row type="flex" justify="space-between">
           <Col :span="4">
-            <el-form-item label="Prefix" prop="prefix">
-              <el-input v-model="formGenerateUser.prefix" placeholder="Prefix"></el-input>
-            </el-form-item>
+            <FormItem label="Prefix" prop="prefix">
+              <Input v-model="formGenerateUser.prefix" placeholder="Prefix"></Input>
+            </FormItem>
           </Col>
           <Col :span="4">
-            <el-form-item label="Suffix" prop="suffix">
-              <el-input v-model="formGenerateUser.suffix" placeholder="Suffix"></el-input>
-            </el-form-item>
+            <FormItem label="Suffix" prop="suffix">
+              <Input v-model="formGenerateUser.suffix" placeholder="Suffix"></Input>
+            </FormItem>
           </Col>
           <Col :span="4">
-            <el-form-item label="Start Number" prop="number_from" required>
-              <el-input-number v-model="formGenerateUser.number_from" style="width: 100%"></el-input-number>
-            </el-form-item>
+            <FormItem label="Start Number" prop="number_from" required>
+              <InputNumber v-model="formGenerateUser.number_from" style="width: 100%"></InputNumber>
+            </FormItem>
           </Col>
           <Col :span="4">
-            <el-form-item label="End Number" prop="number_to" required>
-              <el-input-number v-model="formGenerateUser.number_to" style="width: 100%"></el-input-number>
-            </el-form-item>
+            <FormItem label="End Number" prop="number_to" required>
+              <InputNumber v-model="formGenerateUser.number_to" style="width: 100%"></InputNumber>
+            </FormItem>
           </Col>
           <Col :span="4">
-            <el-form-item label="Password Length" prop="password_length" required>
-              <el-input v-model="formGenerateUser.password_length"
-                        placeholder="Password Length"></el-input>
-            </el-form-item>
+            <FormItem label="Password Length" prop="password_length" required>
+              <Input v-model="formGenerateUser.password_length"
+                        placeholder="Password Length"></Input>
+            </FormItem>
           </Col>
         </Row>
 
-        <el-form-item>
-          <el-button type="primary" @click="generateUser" icon="el-icon-fa-users" :loading="loadingGenerate">Generate & Export
-          </el-button>
+        <FormItem>
+          <!-- <el-button type="primary" @click="generateUser" icon="el-icon-fa-users" :loading="loadingGenerate">Generate & Export
+          </el-button> -->
+          <Button type="primary" @click="generateUser" :loading="loadingGenerate">Generate & Export</Button>
           <span class="userPreview" v-if="formGenerateUser.number_from && formGenerateUser.number_to &&
                                           formGenerateUser.number_from <= formGenerateUser.number_to">
             The usernames will be {{formGenerateUser.prefix + formGenerateUser.number_from + formGenerateUser.suffix}},
@@ -179,86 +215,86 @@
               {{formGenerateUser.prefix + formGenerateUser.number_to + formGenerateUser.suffix}}
             </span>
           </span>
-        </el-form-item>
-      </el-form>
+        </FormItem>
+      </Form>
     </Panel>
     <!--对话框-->
-    <el-dialog :title="$t('m.User_Info')" :visible.sync="showUserDialog" :close-on-click-modal="false">
-      <el-form :model="user" label-width="120px" label-position="left">
+    <Modal :title="$t('m.User_Info')" v-model="showUserDialog" :closable="false">
+      <Form :model="user" :label-width="120" label-position="left">
         <Row :gutter="20">
           <Col :span="12">
-            <el-form-item :label="$t('m.User_Username')" required>
-              <el-input v-model="user.username"></el-input>
-            </el-form-item>
+            <FormItem :label="$t('m.User_Username')" required>
+              <Input v-model="user.username"></Input>
+            </FormItem>
           </Col>
           <Col :span="12">
-            <el-form-item :label="$t('m.User_Real_Name')" required>
-              <el-input v-model="user.real_name"></el-input>
-            </el-form-item>
+            <FormItem :label="$t('m.User_Real_Name')" required>
+              <Input v-model="user.real_name"></Input>
+            </FormItem>
           </Col>
           <Col :span="12">
-            <el-form-item :label="$t('m.User_Email')" required>
-              <el-input v-model="user.email"></el-input>
-            </el-form-item>
+            <FormItem :label="$t('m.User_Email')" required>
+              <Input v-model="user.email"></Input>
+            </FormItem>
           </Col>
           <Col :span="12">
-            <el-form-item :label="$t('m.User_New_Password')">
-              <el-input v-model="user.password"></el-input>
-            </el-form-item>
+            <FormItem :label="$t('m.User_New_Password')">
+              <Input v-model="user.password"></Input>
+            </FormItem>
           </Col>
           <Col :span="12">
-            <el-form-item :label="$t('m.User_Type')">
-              <el-select v-model="user.admin_type">
-                <el-option label="Regular User" value="Regular User"></el-option>
-                <el-option label="Admin" value="Admin"></el-option>
-                <el-option label="Super Admin" value="Super Admin"></el-option>
-              </el-select>
-            </el-form-item>
+            <FormItem :label="$t('m.User_Type')">
+              <Select v-model="user.admin_type">
+                <Option label="Regular User" value="Regular User"></Option>
+                <Option label="Admin" value="Admin"></Option>
+                <Option label="Super Admin" value="Super Admin"></Option>
+              </Select>
+            </FormItem>
           </Col>
           <Col :span="12">
-            <el-form-item :label="$t('m.Problem_Permission')">
-              <el-select v-model="user.problem_permission" :disabled="user.admin_type!=='Admin'">
-                <el-option label="None" value="None"></el-option>
-                <el-option label="Own" value="Own"></el-option>
-                <el-option label="All" value="All"></el-option>
-              </el-select>
-            </el-form-item>
+            <FormItem :label="$t('m.Problem_Permission')">
+              <Select v-model="user.problem_permission" :disabled="user.admin_type!=='Admin'">
+                <Option label="None" value="None"></Option>
+                <Option label="Own" value="Own"></Option>
+                <Option label="All" value="All"></Option>
+              </Select>
+            </FormItem>
           </Col>
           <Col :span="8">
-            <el-form-item :label="$t('m.Two_Factor_Auth')">
-              <el-switch
+            <FormItem :label="$t('m.Two_Factor_Auth')" :label-width="80">
+              <i-switch
                 v-model="user.two_factor_auth"
-                :disabled="!user.real_tfa"
-                active-color="#13ce66"
-                inactive-color="#ff4949">
-              </el-switch>
-            </el-form-item>
+                :disabled="!user.real_tfa">
+              </i-switch>
+            </FormItem>
           </Col>
           <Col :span="8">
-            <el-form-item label="Open Api">
-              <el-switch
+            <FormItem label="Open Api" :label-width="80">
+              <i-switch
                 v-model="user.open_api"
                 active-color="#13ce66"
                 inactive-color="#ff4949">
-              </el-switch>
-            </el-form-item>
+              </i-switch>
+            </FormItem>
           </Col>
           <Col :span="8">
-            <el-form-item :label="$t('m.Is_Disabled')">
-              <el-switch
+            <FormItem :label="$t('m.Is_Disabled')" :label-width="80">
+              <i-switch
                 v-model="user.is_disabled"
                 active-text=""
                 inactive-text="">
-              </el-switch>
-            </el-form-item>
+              </i-switch>
+            </FormItem>
           </Col>
         </Row>
-      </el-form>
+      </Form>
       <span slot="footer" class="dialog-footer">
-        <cancel @click.native="showUserDialog = false">Cancel</cancel>
-        <save @click.native="saveUser()"></save>
+        <Button @click.native="showUserDialog = false">取消</Button>
+        <Button @click.native="saveUser()">确定</Button>
+        <!-- <cancel @click.native="showUserDialog = false">Cancel</cancel>
+        <save @click.native="saveUser()"></save> -->
       </span>
-    </el-dialog>
+    </Modal>
   </div>
 </template>
 
@@ -339,6 +375,20 @@
           {
             title: 'Option',
             slot: 'option'
+          }
+        ],
+        Usercolumns: [
+          {
+            title: 'UserName',
+            key: 'name'
+          },
+          {
+            title: 'PassWord',
+            key: 'password'
+          },
+          {
+            title: 'Email',
+            key: 'studentNumber'
           }
         ]
       }
@@ -421,7 +471,8 @@
         papa.parse(file, {
           complete: (results) => {
             let data = results.data.filter(user => {
-              return user[0] && user[1] && user[2]
+              // return user[0] && user[1] && user[2]
+              return user[0] && user[1]
             })
             let delta = results.data.length - data.length
             if (delta > 0) {
@@ -435,6 +486,7 @@
             this.$error(error)
           }
         })
+        return false
       },
       handleUsersUpload () {
         api.importUsers(this.uploadUsers).then(res => {

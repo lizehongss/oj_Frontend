@@ -226,7 +226,6 @@
     },
     methods: {
       handleDblclick (row) {
-        debugger
         row.isEditing = true
       },
       goEdit (problemId) {

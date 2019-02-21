@@ -2,83 +2,81 @@
   <div class="problem">
 
     <Panel :title="title">
-      <el-form ref="form" :model="problem" :rules="rules" label-position="top" label-width="70px">
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <el-form-item prop="_id" :label="$t('m.Display_ID')"
+      <Form ref="form" :model="problem" :rules="rules" label-position="top" width="70">
+        <Row :gutter="20">
+          <Col :span="6">
+            <FormItem prop="_id" :label="$t('m.Display_ID')"
                           :required="this.routeName === 'create-contest-problem' || this.routeName === 'edit-contet-problem'">
-              <el-input :placeholder="$t('m.Display_ID')" v-model="problem._id"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="18">
-            <el-form-item prop="title" :label="$t('m.Title')" required>
-              <el-input :placeholder="$t('m.Title')" v-model="problem.title"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="24">
-            <el-form-item prop="description" :label="$t('m.Description')" required>
+              <Input :placeholder="$t('m.Display_ID')" v-model="problem._id"></Input>
+            </FormItem>
+          </Col>
+          <Col :span="18">
+            <FormItem prop="title" :label="$t('m.Title')" required>
+              <Input :placeholder="$t('m.Title')" v-model="problem.title"></Input>
+            </FormItem>
+          </Col>
+        </Row>
+        <Row :gutter="20">
+          <Col :span="24">
+            <FormItem prop="description" :label="$t('m.Description')" required>
               <Simditor v-model="problem.description"></Simditor>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="24">
-            <el-form-item prop="input_description" :label="$t('m.Input_Description')" required>
+            </FormItem>
+          </Col>
+        </Row>
+        <Row :gutter="20">
+          <Col :span="24">
+            <FormItem prop="input_description" :label="$t('m.Input_Description')" required>
               <Simditor v-model="problem.input_description"></Simditor>
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item prop="output_description" :label="$t('m.Output_Description')" required>
+            </FormItem>
+          </Col>
+          <Col :span="24">
+            <FormItem prop="output_description" :label="$t('m.Output_Description')" required>
               <Simditor v-model="problem.output_description"></Simditor>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <el-form-item :label="$t('m.Time_Limit') + ' (ms)' " required>
-              <el-input type="Number" :placeholder="$t('m.Time_Limit')" v-model="problem.time_limit"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item :label="$t('m.Memory_limit') + ' (MB)' " required>
-              <el-input type="Number" :placeholder="$t('m.Memory_limit')" v-model="problem.memory_limit"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item :label="$t('m.Difficulty')">
-              <el-select class="difficulty-select" size="small" :placeholder="$t('m.Difficulty')" v-model="problem.difficulty">
-                <el-option label="Low" value="Low"></el-option>
-                <el-option label="Mid" value="Mid"></el-option>
-                <el-option label="High" value="High"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <el-form-item :label="$t('m.Visible')">
-              <el-switch
+            </FormItem>
+          </Col>
+        </Row>
+        <Row :gutter="20">
+          <Col :span="8">
+            <FormItem :label="$t('m.Time_Limit') + ' (ms)' " required>
+              <InputNumber :placeholder="$t('m.Time_Limit')" v-model="problem.time_limit"></InputNumber>
+            </FormItem>
+          </Col>
+          <Col :span="8">
+            <FormItem :label="$t('m.Memory_limit') + ' (MB)' " required>
+              <InputNumber :placeholder="$t('m.Memory_limit')" v-model="problem.memory_limit"></InputNumber>
+            </FormItem>
+          </Col>
+          <Col :span="8">
+            <FormItem :label="$t('m.Difficulty')">
+              <Select class="difficulty-select" size="small" :placeholder="$t('m.Difficulty')" v-model="problem.difficulty">
+                <Option label="Low" value="Low"></Option>
+                <Option label="Mid" value="Mid"></Option>
+                <Option label="High" value="High"></Option>
+              </Select>
+            </FormItem>
+          </Col>
+        </Row>
+        <Row :gutter="20">
+          <Col :span="6">
+            <FormItem :label="$t('m.Visible')">
+              <i-switch
                 v-model="problem.visible"
-                active-text=""
-                inactive-text="">
-              </el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="Tag" :error="error.tags" required>
+              >
+              </i-switch>
+            </FormItem>
+          </Col>
+          <Col :span="8">
+            <FormItem label="Tag" :error="error.tags" required>
               <span class="tags">
-                <el-tag
+                <Tag
                   v-for="tag in problem.tags"
-                  :closable="true"
-                  :close-transition="false"
+                  closable
                   :key="tag"
-                  type="success"
-                  @close="closeTag(tag)"
-                >{{tag}}</el-tag>
+                  color ="success"
+                  @on-close="closeTag(tag)"
+                >{{tag}}</Tag>
               </span>
-              <el-autocomplete
+              <!-- <el-autocomplete
                 v-if="inputVisible"
                 size="mini"
                 class="input-new-tag"
@@ -88,106 +86,113 @@
                 @blur="addTag"
                 @select="addTag"
                 :fetch-suggestions="querySearch">
-              </el-autocomplete>
-              <el-button class="button-new-tag" v-else size="small" @click="inputVisible = true">+ New Tag</el-button>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item :label="$t('m.Languages')" :error="error.languages" required>
-              <el-checkbox-group v-model="problem.languages">
-                <el-tooltip class="spj-radio" v-for="lang in allLanguage.languages" :key="'spj'+lang.name" effect="dark"
+              </el-autocomplete> -->
+              <Input v-if="inputVisible" 
+                     class="input-new-tag" 
+                     v-model="tagInput" 
+                     @on-enter='addTag'
+                     @on-blur='addTag'
+                     >
+              </Input>
+              <Button class="button-new-tag" v-else size="small" @click="inputVisible = true">+ New Tag</Button>
+            </FormItem>
+          </Col>
+          <Col :span="8">
+            <FormItem :label="$t('m.Languages')" :error="error.languages" required>
+              <CheckboxGroup v-model="problem.languages">
+                <Tooltip class="spj-radio" v-for="lang in allLanguage.languages" :key="'spj'+lang.name" theme="light"
                             :content="lang.description" placement="top-start">
-                  <el-checkbox :label="lang.name"></el-checkbox>
-                </el-tooltip>
-              </el-checkbox-group>
-            </el-form-item>
-          </el-col>
-        </el-row>
+                  <Checkbox :label="lang.name"></Checkbox>
+                </Tooltip>
+              </CheckboxGroup>
+            </FormItem>
+          </Col>
+        </Row>
         <div>
-          <el-form-item v-for="(sample, index) in problem.samples" :key="'sample'+index">
+          <FormItem v-for="(sample, index) in problem.samples" :key="'sample'+index">
             <Accordion :title="'Sample' + (index + 1)">
-              <el-button type="warning" size="small" icon="el-icon-delete" slot="header" @click="deleteSample(index)">
+              <Button  type="warning"  icon="ios-trash" slot="header" @click="deleteSample(index)">
                 Delete
-              </el-button>
-              <el-row :gutter="20">
-                <el-col :span="12">
-                  <el-form-item :label="$t('m.Input_Samples')" required>
-                    <el-input
+              </Button>
+              <Row :gutter="20">
+                <Col :span="12">
+                  <FormItem :label="$t('m.Input_Samples')" required>
+                    <Input
                       :rows="5"
                       type="textarea"
                       :placeholder="$t('m.Input_Samples')"
                       v-model="sample.input">
-                    </el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                  <el-form-item :label="$t('m.Output_Samples')" required>
-                    <el-input
+                    </Input>
+                  </FormItem>
+                </Col>
+                <Col :span="12">
+                  <FormItem :label="$t('m.Output_Samples')" required>
+                    <Input
                       :rows="5"
                       type="textarea"
                       :placeholder="$t('m.Output_Samples')"
                       v-model="sample.output">
-                    </el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
+                    </Input>
+                  </FormItem>
+                </Col>
+              </Row>
             </Accordion>
-          </el-form-item>
+          </FormItem>
         </div>
         <div class="add-sample-btn">
-          <button type="button" class="add-samples" @click="addSample()"><i class="el-icon-plus"></i>{{$t('m.Add_Sample')}}
-          </button>
+          <Button  class="add-samples" @click="addSample()" icon="md-add">{{$t('m.Add_Sample')}}
+          </Button>
         </div>
-        <el-form-item style="margin-top: 20px" :label="$t('m.Hint')">
+        <FormItem style="margin-top: 20px" :label="$t('m.Hint')">
           <Simditor v-model="problem.hint" placeholder=""></Simditor>
-        </el-form-item>
-        <el-form-item :label="$t('m.Code_Template')">
-          <el-row>
-            <el-col :span="24" v-for="(v, k) in template" :key="'template'+k">
-              <el-form-item>
-                <el-checkbox v-model="v.checked">{{ k }}</el-checkbox>
+        </FormItem>
+        <FormItem :label="$t('m.Code_Template')">
+          <Row>
+            <Col :span="24" v-for="(v, k) in template" :key="'template'+k">
+              <FormItem>
+                <Checkbox v-model="v.checked">{{ k }}</Checkbox>
                 <div v-if="v.checked">
                   <code-mirror v-model="v.code" :mode="v.mode"></code-mirror>
                 </div>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form-item>
-        <el-form-item :label="$t('m.Special_Judge')" :error="error.spj">
-          <el-col :span="24">
-            <el-checkbox v-model="problem.spj" @click.native.prevent="switchSpj()">{{$t('m.Use_Special_Judge')}}</el-checkbox>
-          </el-col>
-        </el-form-item>
-        <el-form-item v-if="problem.spj">
+              </FormItem>
+            </Col>
+          </Row>
+        </FormItem>
+        <FormItem :label="$t('m.Special_Judge')" :error="error.spj">
+          <Col :span="24">
+            <Checkbox v-model="problem.spj" @click.native.prevent="switchSpj()">{{$t('m.Use_Special_Judge')}}</Checkbox>
+          </Col>
+        </FormItem>
+        <FormItem v-if="problem.spj">
           <Accordion :title="$t('m.Special_Judge_Code')">
             <template slot="header">
               <span>{{$t('m.SPJ_language')}}</span>
-              <el-radio-group v-model="problem.spj_language">
-                <el-tooltip class="spj-radio" v-for="lang in allLanguage.spj_languages" :key="lang.name" effect="dark"
+              <RadioGroup v-model="problem.spj_language">
+                <Tooltip class="spj-radio" v-for="lang in allLanguage.spj_languages" :key="lang.name" theme="dark"
                             :content="lang.description" placement="top-start">
-                  <el-radio :label="lang.name">{{ lang.name }}</el-radio>
-                </el-tooltip>
-              </el-radio-group>
-              <el-button type="primary" size="small" icon="el-icon-fa-random" @click="compileSPJ"
+                  <Radio :label="lang.name">{{ lang.name }}</Radio>
+                </Tooltip>
+              </RadioGroup>
+              <Button type="primary"  icon="md-shuffle" @click="compileSPJ"
                          :loading="loadingCompile">
                 {{$t('m.Compile')}}
-              </el-button>
+              </Button>
             </template>
             <code-mirror v-model="problem.spj_code" :mode="spjMode"></code-mirror>
           </Accordion>
-        </el-form-item>
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <el-form-item :label="$t('m.Type')">
-              <el-radio-group v-model="problem.rule_type" :disabled="disableRuleType">
-                <el-radio label="ACM">ACM</el-radio>
-                <el-radio label="OI">OI</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item :label="$t('m.TestCase')" :error="error.testcase">
-              <el-upload
+        </FormItem>
+        <Row :gutter="20">
+          <Col :span="6">
+            <FormItem :label="$t('m.Type')">
+              <RadioGroup v-model="problem.rule_type" :disabled="disableRuleType">
+                <Radio label="ACM">ACM</Radio>
+                <Radio label="OI">OI</Radio>
+              </RadioGroup>
+            </FormItem>
+          </Col>
+          <Col :span="12">
+            <FormItem :label="$t('m.TestCase')" :error="error.testcase">
+              <!-- <el-upload
                 action="/api/admin/test_case"
                 name="file"
                 :data="{spj: problem.spj}"
@@ -195,12 +200,34 @@
                 :on-success="uploadSucceeded"
                 :on-error="uploadFailed">
                 <el-button size="small" type="primary" icon="el-icon-fa-upload">Choose File</el-button>
-              </el-upload>
-            </el-form-item>
-          </el-col>
+              </el-upload> -->
+              <Upload
+                type="drag"
+                action="/api/admin/text_case"
+                :data="{spj: problem.spj}"
+                :show-upload-list="true"
+                name="file"
+                :on-success="uploadSucceeded"
+                :on-error="uploadFailed">
+                    <Icon type="ios-cloud-upload" size="30" style="color: #3399ff"></Icon>
+                  <p>点击或拖动到这里上传</p>
+              </Upload>
+            </FormItem>
+          </Col>
 
-          <el-col :span="24">
-            <el-table
+          <Col :span="24">
+            <Table :data="problem.test_case_score"
+                   style="width: 100%"
+                   :columns="columns"
+            >
+            <template slot-scope="{ row }" slot="score">
+              <Input size="small" 
+                     :placeholder="$t('m.Score')"
+                     v-model="row.score"
+                     :disabled="problem.rule_type !=='OI'"></Input>
+            </template>
+            </Table>
+            <!-- <el-table
               :data="problem.test_case_score"
               style="width: 100%">
               <el-table-column
@@ -215,23 +242,23 @@
                 prop="score"
                 :label="$t('m.Score')">
                 <template slot-scope="scope">
-                  <el-input
+                  <Input
                     size="small"
                     :placeholder="$t('m.Score')"
                     v-model="scope.row.score"
                     :disabled="problem.rule_type !== 'OI'">
-                  </el-input>
+                  </Input>
                 </template>
               </el-table-column>
-            </el-table>
-          </el-col>
-        </el-row>
-
-        <el-form-item :label="$t('m.Source')">
-          <el-input :placeholder="$t('m.Source')" v-model="problem.source"></el-input>
-        </el-form-item>
-        <save @click.native="submit()">Save</save>
-      </el-form>
+            </el-table> -->
+          </Col>
+        </Row>
+        <FormItem :label="$t('m.Source')" :style="{marginTop: 20 + 'px'}">
+          <Input :placeholder="$t('m.Source')" v-model="problem.source"></Input>
+        </FormItem>
+        <!-- <save @click.native="submit()">Save</save> -->
+        <Button @click.native="submit()" type="primary">Save</Button>
+      </Form>
     </Panel>
   </div>
 </template>
@@ -280,7 +307,22 @@
           spj: '',
           languages: '',
           testCase: ''
-        }
+        },
+        columns: [
+          {
+            title: this.$t('m.Input'),
+            key: 'input_name'
+          },
+          {
+            title: this.$t('m.Output'),
+            key: 'output_name'
+          },
+          {
+            title: this.$t('m.Score'),
+            key: 'score',
+            slot: 'score'
+          }
+        ]
       }
     },
     mounted () {

@@ -4,13 +4,22 @@
     </div>
     <panel title="Export Problems (beta)">
       <div slot="header">
-        <el-input
+        <Input
+          suffix="ios-search"
           v-model="keyword"
-          prefix-icon="el-icon-search"
           placeholder="Keywords">
-        </el-input>
+        </Input>
       </div>
-      <el-table :data="problems"
+      <Table :data="problems"
+             :loading="loadingProblems" @on-selection-change="handleSelectionChange" ref="table" :columns="columns">
+      <template slot-scope="{ row }" slot="author">
+        {{row.created_by.username}}
+      </template>
+      <template slot-scope="{ row }" slot="create_time">
+        {{row.create_time | localtime}}
+      </template>
+      </Table>
+      <!-- <el-table :data="problems"
                 v-loading="loadingProblems" @selection-change="handleSelectionChange">
         <el-table-column
           type="selection"
@@ -41,22 +50,29 @@
             {{scope.row.create_time | localtime }}
           </template>
         </el-table-column>
-      </el-table>
+      </el-table> -->
 
       <div class="panel-options">
-        <el-button type="primary" size="small" v-show="selected_problems.length"
-                   @click="exportProblems" icon="el-icon-fa-arrow-down">Export
-        </el-button>
-        <el-pagination
+        <Button type="primary" v-show="selected_problems.length"
+                   @click="exportProblems" icon="md-arrow-down">Export
+        </Button>
+        <!-- <el-pagination
           class="page"
           layout="prev, pager, next"
           @current-change="getProblems"
           :page-size="limit"
           :total="total">
-        </el-pagination>
+        </el-pagination> -->
+        <Page
+          :total="total"
+          class="page"
+          size="small"
+          :page-size="limit"
+          @on-change="getProblems"
+        ></Page>
       </div>
     </panel>
-    <panel title="Import QDUOJ Problems (beta)">
+    <!-- <panel title="Import QDUOJ Problems (beta)">
       <el-upload
         ref="QDU"
         action="/api/admin/import_problem"
@@ -69,10 +85,21 @@
         :auto-upload="false"
         :on-success="uploadSucceeded"
         :on-error="uploadFailed">
-        <el-button size="small" type="primary" icon="el-icon-fa-upload" slot="trigger">Choose File</el-button>
-        <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload('QDU')">Upload</el-button>
+        <Button size="small"  type="primary" icon="ios-cloud-upload-outline" slot="trigger">Choose File</Button>
+        <Button  size="small" style="margin-left: 10px;"  type="success" @click="submitUpload('QDU')">Upload</Button>
       </el-upload>
-    </panel>
+      <Upload 
+        ref="QDU"
+        action="/api/admin/import_problem"
+        name="file"
+        :default-file-list="fileList1"
+        :show-upload-list="true"
+        :width-credentials="true"
+        :max-size="1024"
+        
+      >
+      </Upload> 
+    </panel> -->
 
     <panel title="Import FPS Problems (beta)">
       <el-upload
@@ -87,8 +114,8 @@
         :auto-upload="false"
         :on-success="uploadSucceeded"
         :on-error="uploadFailed">
-        <el-button size="small" type="primary" icon="el-icon-fa-upload" slot="trigger">Choose File</el-button>
-        <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload('FPS')">Upload</el-button>
+        <Button size="small" type="primary" icon="ios-cloud-upload-outline" slot="trigger">Choose File</Button>
+        <Button style="margin-left: 10px;" size="small" type="success" @click="submitUpload('FPS')">Upload</Button>
       </el-upload>
     </panel>
   </div>
@@ -110,7 +137,37 @@
         loadingImporting: false,
         keyword: '',
         problems: [],
-        selected_problems: []
+        selected_problems: [],
+        columns: [
+          {
+            type: 'selection',
+            width: 60,
+            align: 'center'
+          },
+          {
+            title: 'ID',
+            key: 'id'
+          },
+          {
+            title: 'DisplayID',
+            key: '_id',
+            width: 200
+          },
+          {
+            title: 'Title',
+            key: 'title'
+          },
+          {
+            title: 'Author',
+            key: 'created_by',
+            slot: 'author'
+          },
+          {
+            title: 'Create Time',
+            key: 'create_time',
+            slot: 'create_time'
+          }
+        ]
       }
     },
     mounted () {

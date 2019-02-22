@@ -10,7 +10,8 @@
           </Col>
           <Col :span="24">
             <FormItem :label="$t('m.ContestDescription')" required>
-              <Simditor v-model="contest.description"></Simditor>
+              <!-- <Simditor v-model="contest.description"></Simditor> -->
+              <Editor ref="editor" v-model="contest.description" @on-change="handleChange"></Editor>
             </FormItem>
           </Col>
           <Col :span="8">
@@ -86,11 +87,13 @@
 <script>
   import api from '../../api.js'
   import Simditor from '../../components/Simditor.vue'
+  import Editor from '../../components/Editor.vue'
 
   export default {
     name: 'CreateContest',
     components: {
-      Simditor
+      Simditor,
+      Editor
     },
     data () {
       return {
@@ -135,6 +138,10 @@
         if (index !== -1) {
           this.contest.allowed_ip_ranges.splice(index, 1)
         }
+      },
+      handleChange (html, text) {
+        // edit实时变化函数
+        // console.log(html, text)
       }
     },
     mounted () {

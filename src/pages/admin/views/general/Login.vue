@@ -1,18 +1,18 @@
 <template>
-  <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px"
+  <Form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px"
            class="demo-ruleForm login-container">
-    <h3 class="title">欢迎来到这里</h3>
-    <el-form-item prop="account">
-      <el-input type="text" v-model="ruleForm2.account" auto-complete="off" placeholder="username" @keyup.enter.native="handleLogin"></el-input>
-    </el-form-item>
-    <el-form-item prop="password">
-      <el-input type="password" v-model="ruleForm2.password" auto-complete="off" placeholder="password" @keyup.enter.native="handleLogin"></el-input>
-    </el-form-item>
-    <el-form-item style="width:100%;">
-      <el-button type="primary" style="width:100%;" @click.native.prevent="handleLogin" :loading="logining">GO
-      </el-button>
-    </el-form-item>
-  </el-form>
+    <h3 class="title">实验平台后台</h3>
+    <FormItem prop="account">
+      <Input type="text" v-model="ruleForm2.account" auto-complete="off" placeholder="用户名" @keyup.enter.native="handleLogin"></Input>
+    </FormItem>
+    <FormItem prop="password">
+      <Input type="password" v-model="ruleForm2.password" auto-complete="off" placeholder="密码" @keyup.enter.native="handleLogin"></Input>
+    </FormItem>
+    <FormItem style="width:100%;">
+      <Button type="primary" style="width:100%;" @click.native.prevent="handleLogin" :loading="logining">登录
+      </Button>
+    </FormItem>
+  </Form>
 </template>
 
 <script>
@@ -28,10 +28,10 @@
         },
         rules2: {
           account: [
-            {required: true, trigger: 'blur'}
+            {required: true, trigger: 'blur', message: '用户名不能为空'}
           ],
           password: [
-            {required: true, trigger: 'blur'}
+            {required: true, trigger: 'blur', message: '密码不能为空'}
           ]
         },
         checked: true

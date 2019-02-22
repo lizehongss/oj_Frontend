@@ -8,7 +8,7 @@
       <Menu-item name="/announcement">{{$t('m.Announcement')}}</Menu-item>
       <Menu-item name="/conf">{{$t('m.System_Config')}}</Menu-item>
       <Menu-item name="/judge-server">{{$t('m.Judge_Server')}}</Menu-item>
-      <Menu-item name="/prune-test-case">{{$t('m.Prune_Test_Case')}}</Menu-item>
+      <!-- <Menu-item name="/prune-test-case">{{$t('m.Prune_Test_Case')}}</Menu-item> -->
     </Submenu>
     <Submenu name="problem" v-if="hasProblemPermission">
       <template slot="title"><Icon type=""></Icon>{{$t('m.Problem')}}</template>

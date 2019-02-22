@@ -1,11 +1,16 @@
 <template>
   <div>
-    <el-input
+    <Input
       v-model="keyword"
       placeholder="Keywords"
-      prefix-icon="el-icon-search">
-    </el-input>
-    <el-table :data="problems" v-loading="loading">
+      suffix="ios-search">
+    </Input>
+    <Table :style="{marginTop: 20 + 'px'}" :loading="loading" :data="problems" :columns="columns">
+      <template slot-scope="{ row }" slot="option">
+        <Button icon="md-add" name="添加问题" @click.native="handleAddProblem(row.id)"></Button>
+      </template>
+    </Table>
+    <!-- <el-table :data="problems" v-loading="loading">
       <el-table-column
         label="ID"
         width="100"
@@ -30,15 +35,21 @@
                     @click.native="handleAddProblem(row.id)"></icon-btn>
         </template>
       </el-table-column>
-    </el-table>
+    </el-table> -->
 
-    <el-pagination
+    <!-- <el-pagination
       class="page"
       layout="prev, pager, next"
       @current-change="getPublicProblem"
       :page-size="limit"
       :total="total">
-    </el-pagination>
+    </el-pagination> -->
+    <Page
+      :total="total"
+      class="page"
+      :page-size="limit"
+      @on-change="uploadUsersCurrentPage">
+    </Page>
   </div>
 </template>
 <script>
@@ -55,7 +66,26 @@
         loading: false,
         problems: [],
         contest: {},
-        keyword: ''
+        keyword: '',
+        columns: [
+          {
+            title: 'ID',
+            key: 'id'
+          },
+          {
+            title: 'DisplayID',
+            key: '_id'
+          },
+          {
+            title: 'Title',
+            key: 'title'
+          },
+          {
+            title: 'option',
+            slot: 'option',
+            width: 100
+          }
+        ]
       }
     },
     mounted () {

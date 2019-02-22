@@ -1,83 +1,84 @@
 <template>
   <div class="view">
     <Panel :title="title">
-      <el-form label-position="top">
-        <el-row :gutter="20">
-          <el-col :span="24">
-            <el-form-item :label="$t('m.ContestTitle')" required>
-              <el-input v-model="contest.title" :placeholder="$t('m.ContestTitle')"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item :label="$t('m.ContestDescription')" required>
+      <Form label-position="top">
+        <Row :gutter="20">
+          <Col :span="24">
+            <FormItem :label="$t('m.ContestTitle')" required>
+              <Input v-model="contest.title" :placeholder="$t('m.ContestTitle')"></Input>
+            </FormItem>
+          </Col>
+          <Col :span="24">
+            <FormItem :label="$t('m.ContestDescription')" required>
               <Simditor v-model="contest.description"></Simditor>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item :label="$t('m.Contest_Start_Time')" required>
-              <el-date-picker
+            </FormItem>
+          </Col>
+          <Col :span="8">
+            <FormItem :label="$t('m.Contest_Start_Time')" required>
+              <DatePicker
                 v-model="contest.start_time"
                 type="datetime"
                 :placeholder="$t('m.Contest_Start_Time')">
-              </el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item :label="$t('m.Contest_End_Time')" required>
-              <el-date-picker
+              </DatePicker>
+            </FormItem>
+          </Col>
+          <Col :span="8">
+            <FormItem :label="$t('m.Contest_End_Time')" required>
+              <DatePicker
                 v-model="contest.end_time"
                 type="datetime"
                 :placeholder="$t('m.Contest_End_Time')">
-              </el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item :label="$t('m.Contest_Password')">
-              <el-input v-model="contest.password" :placeholder="$t('m.Contest_Password')"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item :label="$t('m.Contest_Rule_Type')">
-              <el-radio class="radio" v-model="contest.rule_type" label="ACM" :disabled="disableRuleType">ACM</el-radio>
-              <el-radio class="radio" v-model="contest.rule_type" label="OI" :disabled="disableRuleType">OI</el-radio>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item :label="$t('m.Real_Time_Rank')">
-              <el-switch
+              </DatePicker>
+            </FormItem>
+          </Col>
+          <Col :span="8">
+            <FormItem :label="$t('m.Contest_Password')">
+              <Input v-model="contest.password" :placeholder="$t('m.Contest_Password')"></Input>
+            </FormItem>
+          </Col>
+          <Col :span="8">
+            <FormItem :label="$t('m.Contest_Rule_Type')">
+              <RadioGroup v-model="contest.rule_type">
+                <Radio label="ACM" :disabled="disableRuleType">ACM</Radio>
+                <Radio label="OI" :disabled="disableRuleType">OI</Radio>
+              </RadioGroup>
+              <!-- <el-radio class="radio" v-model="contest.rule_type" label="ACM" :disabled="disableRuleType">ACM</el-radio>
+              <el-radio class="radio" v-model="contest.rule_type" label="OI" :disabled="disableRuleType">OI</el-radio> -->
+            </FormItem>
+          </Col>
+          <Col :span="8">
+            <FormItem :label="$t('m.Real_Time_Rank')">
+              <i-switch>
                 v-model="contest.real_time_rank"
-                active-color="#13ce66"
-                inactive-color="#ff4949">
-              </el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item :label="$t('m.Contest_Status')">
-              <el-switch
-                v-model="contest.visible"
-                active-text=""
-                inactive-text="">
-              </el-switch>
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item :label="$t('m.Allowed_IP_Ranges')">
+              </i-switch>
+            </FormItem>
+          </Col>
+          <Col :span="8">
+            <FormItem :label="$t('m.Contest_Status')">
+              <i-switch
+                v-model="contest.visible">
+              </i-switch>
+            </FormItem>
+          </Col>
+          <Col :span="24">
+            <FormItem :label="$t('m.Allowed_IP_Ranges')">
               <div v-for="(range, index) in contest.allowed_ip_ranges" :key="index">
-                <el-row :gutter="20" style="margin-bottom: 15px">
-                  <el-col :span="8">
-                    <el-input v-model="range.value" :placeholder="$t('m.CIDR_Network')"></el-input>
-                  </el-col>
-                  <el-col :span="10">
-                    <el-button plain icon="el-icon-fa-plus" @click="addIPRange"></el-button>
-                    <el-button plain icon="el-icon-fa-trash" @click="removeIPRange(range)"></el-button>
-                  </el-col>
-                </el-row>
+                <Row :gutter="20" style="margin-bottom: 15px">
+                  <Col :span="8">
+                    <Input v-model="range.value" :placeholder="$t('m.CIDR_Network')"></Input>
+                  </Col>
+                  <Col :span="10">
+                    <Button plain icon="md-add" @click="addIPRange"></Button>
+                    <Button plain icon="ios-trash" @click="removeIPRange(range)"></Button>
+                  </Col>
+                </Row>
               </div>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <save @click.native="saveContest"></save>
+            </FormItem>
+          </Col>
+        </Row>
+      </Form>
+      <!-- <save @click.native="saveContest"></save> -->
+      <Button @click.native="saveContest" type="primary">保存</Button>
     </Panel>
   </div>
 </template>
@@ -93,7 +94,7 @@
     },
     data () {
       return {
-        title: 'Create Contest',
+        title: '创建实验',
         disableRuleType: false,
         contest: {
           title: '',
@@ -138,7 +139,7 @@
     },
     mounted () {
       if (this.$route.name === 'edit-contest') {
-        this.title = 'Edit Contest'
+        this.title = '编辑实验'
         this.disableRuleType = true
         api.getContest(this.$route.params.contestId).then(res => {
           let data = res.data.data

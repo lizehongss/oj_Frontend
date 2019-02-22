@@ -1,14 +1,37 @@
 <template>
   <div class="view">
-    <Panel title="Contest List">
+    <Panel title="实验列表">
       <div slot="header">
-        <el-input
+        <Input
+          suffix="ios-search"
           v-model="keyword"
-          prefix-icon="el-icon-search"
           placeholder="Keywords">
-        </el-input>
+        </Input>
       </div>
-      <el-table
+      <Table style="width: 100%" :loading="loading" ref="table" :data="contestList" :columns="columns">
+          <template slot-scope="{ row }" slot="rule_type">
+            <Tag color="primary">{{row.rule_type}}</Tag>
+          </template>
+          <template slot-scope="{ row }" slot="contest_type">
+            <Tag v-if="row.contest_type==='Public'" color="success">{{row.contest_type}}</Tag>
+            <Tag v-else color="primary">{{row.contest_type}}</Tag>
+          </template>
+          <template slot-scope="{ row }" slot="status">
+            <Tag v-if="row.status==='-1'" color="error">{{row.status | contestStatus}}</Tag>
+            <Tag v-else-if="row.status === '0'" color="success">{{row.status | contestStatus}}</Tag>
+            <Tag v-else color="primary">{{row.status | contestStatus}}</Tag>
+          </template>
+          <template slot-scope="{ row }" slot="visible">
+            <i-switch v-model="row.visible" @on-change="handleVisibleSwitch(row)"></i-switch>
+          </template>
+          <template slot-scope="{ row }" slot="operation">
+            <Button name="Edit" icon="ios-brush" @click.native="goEdit(row.id)"></Button>
+            <Button name="Problem" icon="md-list " @click.native="goContestProblemList(row.id)"></Button>
+            <Button name="Announcement" icon="ios-alert" @click.native="goContestAnnouncement(row.id)"></Button>
+            <Button name="Download Accepted Submissions" icon="md-cloud-download" @click.native="openDownloadOptions(row.id)"></Button>
+          </template>
+      </Table>
+      <!-- <el-table
         v-loading="loading"
         element-loading-text="loading"
         ref="table"
@@ -81,25 +104,32 @@
                       @click.native="openDownloadOptions(scope.row.id)"></icon-btn>
           </div>
         </el-table-column>
-      </el-table>
+      </el-table> -->
       <div class="panel-options">
-        <el-pagination
+        <!-- <el-pagination
           class="page"
           layout="prev, pager, next"
           @current-change="currentChange"
           :page-size="pageSize"
           :total="total">
-        </el-pagination>
+        </el-pagination> -->
+        <Page
+          :total="total"
+          class="page"
+          :page-size="pageSize"
+          @on-change="currentChange">
+        </Page>
       </div>
     </Panel>
-    <el-dialog title="Download Contest Submissions"
+    <Modal title="下载比赛提交"
                width="30%"
-               :visible.sync="downloadDialogVisible">
-      <el-switch v-model="excludeAdmin" active-text="Exclude admin submissions"></el-switch>
+               v-model="downloadDialogVisible">
+      <i-switch v-model="excludeAdmin"></i-switch>
+      <span :style="{marginLeft: 10 + 'px', fontSize: 15 + 'px',}">排除管理员提交</span>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="downloadSubmissions">确 定</el-button>
+        <Button type="primary" @click="downloadSubmissions">确 定</Button>
       </span>
-    </el-dialog>
+    </Modal>
   </div>
 </template>
 
@@ -120,7 +150,43 @@
         excludeAdmin: true,
         currentPage: 1,
         currentId: 1,
-        downloadDialogVisible: false
+        downloadDialogVisible: false,
+        columns: [
+          {
+            type: 'expand',
+            width: 50
+          },
+          {
+            title: 'ID',
+            key: 'id'
+          },
+          {
+            title: 'Rule Type',
+            key: 'rule_type',
+            slot: 'rule_type'
+          },
+          {
+            title: 'Contest Type',
+            key: 'contest_type',
+            slot: 'contest_type'
+          },
+          {
+            title: 'Status',
+            width: 130,
+            key: 'status',
+            slot: 'status'
+          },
+          {
+            title: 'Visible',
+            key: 'visible',
+            slot: 'visible'
+          },
+          {
+            title: 'Operation',
+            slot: 'operation',
+            width: 250
+          }
+        ]
       }
     },
     mounted () {

@@ -1,6 +1,6 @@
 <template>
   <div class="view">
-    <Panel :title="contestId ? 'Contest Problem List' : 'Problem List'">
+    <Panel :title="contestId ? '实验问题列表' : '问题列表'">
       <div slot="header">
         <Input
           v-model="keyword"
@@ -30,13 +30,12 @@
         </template>
         <template slot-scope="{ row }" slot='operation'>
           <Button name="Edit" icon="ios-brush" @click.native="goEdit(row.id)"></Button>
-          <Button v-if="contestId" name="Make Public" icon=""
+          <Button v-if="contestId" name="Make Public" icon="md-git-compare"
                   @click.native="makeContestProblemPublic(row.id)"
           ></Button>
           <Button name="Download TestCase" icon="ios-cloud-download" @click.native="downloadTestCase(row.id)"></Button>
           <Button name="Delete Problem" icon="ios-trash" @click.native="deleteProblem(row.id)"></Button>
         </template>
-
       </Table>
       <!-- <el-table
         v-loading="loading"
@@ -214,7 +213,8 @@
           },
           {
             title: 'Operation',
-            slot: 'operation'
+            slot: 'operation',
+            width: 250
           }
         ]
       }

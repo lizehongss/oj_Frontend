@@ -2,7 +2,7 @@
   <div>
     <div style="padding-bottom: 10px;">
     </div>
-    <panel title="Export Problems (beta)">
+    <panel title="导出问题(beta)">
       <div slot="header">
         <Input
           suffix="ios-search"
@@ -101,7 +101,7 @@
       </Upload> 
     </panel> -->
 
-    <panel title="Import FPS Problems (beta)">
+    <panel title="导入问题(beta)">
       <el-upload
         ref="FPS"
         action="/api/admin/import_fps"
@@ -114,8 +114,8 @@
         :auto-upload="false"
         :on-success="uploadSucceeded"
         :on-error="uploadFailed">
-        <Button size="small" type="primary" icon="ios-cloud-upload-outline" slot="trigger">Choose File</Button>
-        <Button style="margin-left: 10px;" size="small" type="success" @click="submitUpload('FPS')">Upload</Button>
+        <Button size="small" type="primary" icon="ios-cloud-upload-outline" slot="trigger">选择文件</Button>
+        <Button style="margin-left: 10px;" size="small" type="success" @click="submitUpload('FPS')">上传</Button>
       </el-upload>
     </panel>
   </div>

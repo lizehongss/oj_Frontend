@@ -101,7 +101,7 @@
     </Panel>
     <!--对话框-->
     <Modal :title="announcementDialogTitle" v-model="showEditAnnouncementDialog"
-               @on-visible-change="onOpenEditDialog" :close-on-click-modal="false">
+               @on-visible-change="onOpenEditDialog" :close-on-click-modal="false" :width="700">
       <Form label-position="top">
         <FormItem :label="$t('m.Announcement_Title')" required>
           <Input
@@ -110,7 +110,8 @@
           </Input>
         </FormItem>
         <FormItem :label="$t('m.Announcement_Content')" required>
-          <Simditor v-model="announcement.content"></Simditor>
+          <!-- <Simditor v-model="announcement.content"></Simditor> -->
+          <Editor v-model="announcement.content"></Editor>
         </FormItem>
         <div class="visible-box">
           <span>{{$t('m.Announcement_Status')}}</span>
@@ -132,12 +133,14 @@
 
 <script>
   import Simditor from '../../components/Simditor.vue'
+  import Editor from '../../components/Editor.vue'
   import api from '../../api.js'
 
   export default {
     name: 'Announcement',
     components: {
-      Simditor
+      Simditor,
+      Editor
     },
     data () {
       return {

@@ -19,19 +19,22 @@
         <Row :gutter="20">
           <Col :span="24">
             <FormItem prop="description" :label="$t('m.Description')" required>
-              <Simditor v-model="problem.description"></Simditor>
+              <!-- <Simditor v-model="problem.description"></Simditor> -->
+              <Editor v-model="problem.description"></Editor>
             </FormItem>
           </Col>
         </Row>
         <Row :gutter="20">
           <Col :span="24">
             <FormItem prop="input_description" :label="$t('m.Input_Description')" required>
-              <Simditor v-model="problem.input_description"></Simditor>
+              <!-- <Simditor v-model="problem.input_description"></Simditor> -->
+              <Editor v-model="problem.input_description"></Editor>
             </FormItem>
           </Col>
           <Col :span="24">
             <FormItem prop="output_description" :label="$t('m.Output_Description')" required>
-              <Simditor v-model="problem.output_description"></Simditor>
+              <!-- <Simditor v-model="problem.output_description"></Simditor> -->
+              <Editor v-model="problem.output_description"></Editor>
             </FormItem>
           </Col>
         </Row>
@@ -144,7 +147,8 @@
           </Button>
         </div>
         <FormItem style="margin-top: 20px" :label="$t('m.Hint')">
-          <Simditor v-model="problem.hint" placeholder=""></Simditor>
+          <!-- <Simditor v-model="problem.hint" placeholder=""></Simditor> -->
+          <Editor v-model="problem.hint"></Editor>
         </FormItem>
         <FormItem :label="$t('m.Code_Template')">
           <Row>
@@ -265,6 +269,7 @@
 
 <script>
   import Simditor from '../../components/Simditor'
+  import Editor from '../../components/Editor'
   import Accordion from '../../components/Accordion'
   import CodeMirror from '../../components/CodeMirror'
   import api from '../../api'
@@ -274,7 +279,8 @@
     components: {
       Simditor,
       Accordion,
-      CodeMirror
+      CodeMirror,
+      Editor
     },
     data () {
       return {

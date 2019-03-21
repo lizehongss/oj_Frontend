@@ -196,7 +196,7 @@
           </Col>
           <Col :span="12">
             <FormItem :label="$t('m.TestCase')" :error="error.testcase">
-              <!-- <el-upload
+              <el-upload
                 action="/api/admin/test_case"
                 name="file"
                 :data="{spj: problem.spj}"
@@ -204,8 +204,8 @@
                 :on-success="uploadSucceeded"
                 :on-error="uploadFailed">
                 <el-button size="small" type="primary" icon="el-icon-fa-upload">Choose File</el-button>
-              </el-upload> -->
-              <Upload
+              </el-upload>
+              <!-- <Upload
                 type="drag"
                 action="/api/admin/text_case"
                 :data="{spj: problem.spj}"
@@ -215,7 +215,7 @@
                 :on-error="uploadFailed">
                     <Icon type="ios-cloud-upload" size="30" style="color: #3399ff"></Icon>
                   <p>点击或拖动到这里上传</p>
-              </Upload>
+              </Upload> -->
             </FormItem>
           </Col>
 

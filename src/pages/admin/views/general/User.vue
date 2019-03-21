@@ -101,14 +101,14 @@
           <Icon type="ios-help-circle-outline"></Icon>
         </Poptip>
       </span>
-      <!-- <el-upload v-if="!uploadUsers.length"
+      <el-upload v-if="!uploadUsers.length"
                  action=""
                  :show-file-list="false"
                  accept=".csv"
                  :before-upload="handleUsersCSV">
         <el-button size="small" icon="el-icon-fa-upload" type="primary">Choose File</el-button>
-      </el-upload> -->
-      <Upload 
+      </el-upload>
+      <!-- <Upload 
         v-if="!uploadUsers.length"
         type="drag"
         action=""
@@ -120,7 +120,7 @@
             <Icon type="ios-cloud-upload" size="50" style="color: #3399ff"></Icon>
             <p>点击或拖动到这里上传</p>
           </div>
-        </Upload>
+        </Upload> -->
       <template v-else>
         <!-- <Table :data="uploadUsersPage" :colums="Usercolumns">
         </Table> -->
@@ -470,6 +470,7 @@
       handleUsersCSV (file) {
         papa.parse(file, {
           complete: (results) => {
+            debugger
             let data = results.data.filter(user => {
               // return user[0] && user[1] && user[2]
               return user[0] && user[1]

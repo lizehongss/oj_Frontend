@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 // 引入 view 组件
 import { Announcement, Conf, Contest, ContestList, Home, JudgeServer, Login,
-  Problem, ProblemList, User, PruneTestCase, Dashboard, ProblemImportOrExport } from './views'
+  Problem, ProblemList, ChoiceList, User, PruneTestCase, Dashboard, ProblemImportOrExport, Help } from './views'
 Vue.use(VueRouter)
 
 export default new VueRouter({
@@ -14,6 +14,18 @@ export default new VueRouter({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/help',
+      component: Home,
+      children: [
+        {
+          path: '',
+          name: 'help',
+          component: Help
+
+        }
+      ]
     },
     {
       path: '/',
@@ -93,6 +105,11 @@ export default new VueRouter({
           path: '/contest/:contestId/problems',
           name: 'contest-problem-list',
           component: ProblemList
+        },
+        {
+          path: '/contest/:contestId/choice',
+          name: 'contest-problem-choice',
+          component: ChoiceList
         },
         {
           path: '/contest/:contestId/problem/create',

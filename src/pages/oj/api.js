@@ -262,6 +262,35 @@ export default {
     return ajax('admin/contest/acm_helper', 'put', {
       data
     })
+  },
+  getContestChoice (params) {
+    return ajax('admin/contest/problemchoice', 'get', {
+      params
+    })
+  },
+  getscore (offset, limit, keyword, id) {
+    let params = {offset, limit, contest_id: id}
+    if (keyword) {
+      params.keyword = keyword
+    }
+    return ajax('contest/choice', 'get', {
+      params: params
+    })
+  },
+  getContestBlank (params) {
+    return ajax('contest/problemblank', 'get', {
+      params
+    })
+  },
+  postChoiceScore (data) {
+    return ajax('admin/contest/choice', 'post', {
+      data
+    })
+  },
+  postBlankScore (data) {
+    return ajax('admin/contest/Blank', 'post', {
+      data
+    })
   }
 }
 

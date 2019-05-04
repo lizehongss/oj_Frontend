@@ -192,6 +192,7 @@
     methods: {
       init () {
         this.contestID = this.$route.params.contestID
+        console.log(this.$route.query)
         let query = this.$route.query
         this.problemID = query.problemID
         this.formFilter.myself = query.myself === '1'

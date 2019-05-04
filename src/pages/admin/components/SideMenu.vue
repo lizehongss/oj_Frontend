@@ -22,6 +22,7 @@
       <Menu-item name="/contest">{{$t('m.Contest_List')}}</Menu-item>
       <Menu-item name="/contest/create">{{$t('m.Create_Contest')}}</Menu-item>
     </Submenu>
+    <Menu-item name="/help"><Icon type=""></Icon>操作说明</Menu-item>
   </Menu>
 </template>
 <script>

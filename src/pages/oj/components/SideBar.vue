@@ -33,7 +33,7 @@
           {{$t('m.OI_Rank')}}
         </Menu-item>
       </Submenu> -->
-      <!-- <Submenu name="about">
+      <Submenu name="about">
         <template slot="title">
           <Icon type="ios-information-circle"></Icon>
           {{$t('m.About')}}
@@ -42,9 +42,10 @@
           {{$t('m.Judger')}}
         </Menu-item>
         <Menu-item name="/FAQ">
-          {{$t('m.FAQ')}}
+          <!-- {{$t('m.FAQ')}} -->
+          使用说明
         </Menu-item>
-      </Submenu> -->
+      </Submenu>
     </Menu>
   </div>
 </template>

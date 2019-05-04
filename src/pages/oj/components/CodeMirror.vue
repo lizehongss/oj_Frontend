@@ -10,7 +10,7 @@
         </Select>
 
         <Tooltip content="Reset to default code definition" placement="top" style="margin-left: 10px">
-          <Button icon="refresh" @click="onResetClick"></Button>
+          <Button icon="md-refresh" @click="onResetClick"></Button>
         </Tooltip>
 
       </div>

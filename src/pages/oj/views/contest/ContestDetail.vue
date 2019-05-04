@@ -44,7 +44,16 @@
           <Icon type="md-briefcase"></Icon>
           {{$t('m.Announcements')}}
         </VerticalMenu-item> -->
-
+        <VerticalMenu-item  :disabled="contestMenuDisabled"
+                            :route="{name: 'contest-choice', params: {contestID: contestID}}">
+          <Icon type="md-albums"></Icon>
+          选择题
+        </VerticalMenu-item>
+        <VerticalMenu-item  :disabled="contestMenuDisabled"
+                            :route="{name: 'contest-blank', params: {contestID: contestID}}">
+          <Icon type="ios-apps-outline"></Icon>
+          填空题
+        </VerticalMenu-item>
         <VerticalMenu-item :disabled="contestMenuDisabled"
                            :route="{name: 'contest-problem-list', params: {contestID: contestID}}">
           <Icon type="ios-photos"></Icon>
@@ -69,6 +78,11 @@
                            :route="{name: 'acm-helper', params: {contestID: contestID}}">
           <Icon type="ios-paw"></Icon>
           {{$t('m.Admin_Helper')}}
+        </VerticalMenu-item>
+                <VerticalMenu-item v-if="showAdminHelper"
+                           :route="{name: 'contest-blank-score', params: {contestID: contestID}}">
+          <Icon type="ios-aperture-outline"></Icon>
+          选择和填空分数
         </VerticalMenu-item>
       </VerticalMenu>
     </div>

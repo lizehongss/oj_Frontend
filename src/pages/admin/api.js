@@ -259,6 +259,48 @@ export default {
       data
     })
   },
+  createContestChoice (list, _id) {
+    return ajax('admin/contest/problemchoice', 'post', {
+      data: {
+        list,
+        _id
+      }
+    })
+  },
+  createContestBlank (list, _id) {
+    return ajax('admin/contest/problemblank', 'post', {
+      data: {
+        list,
+        _id
+      }
+    })
+  },
+  getContestChoice (params) {
+    params = utils.filterEmptyValue(params)
+    return ajax('admin/contest/problemchoice', 'get', {
+      params
+    })
+  },
+  getContestBlank (params) {
+    params = utils.filterEmptyValue(params)
+    return ajax('admin/contest/problemblank', 'get', {
+      params
+    })
+  },
+  deleteContestChoice (id) {
+    return ajax('admin/contest/problemchoice', 'delete', {
+      params: {
+        id
+      }
+    })
+  },
+  deleteContestBlank (id) {
+    return ajax('admin/contest/problemblank', 'delete', {
+      params: {
+        id
+      }
+    })
+  },
   editContestProblem (data) {
     return ajax('admin/contest/problem', 'put', {
       data

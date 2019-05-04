@@ -1,5 +1,4 @@
 <template>
-<!-- 学号没完成 -->
   <div class="view">
     <Panel :title="$t('m.User_User') ">
       <div slot="header">
@@ -10,7 +9,15 @@
                        @click="deleteUsers(selectedUserIDs)">Delete
             </Button>
           </Col>
-          <Col :span="selectedUsers.length ? 16: 24">
+          <Col :span="selectedUsers.length ? 8: 12">
+            <Select v-model="keyword" @on-change="handleFilterManage">
+              <Option value="">所有</Option>
+              <Option value="Admin">管理员</Option>
+              <Option value="Super Admin">超级管理员</Option> 
+              <Option value="Regular User">普通用户</Option>
+            </Select>
+          </Col>
+          <Col :span="selectedUsers.length ? 8: 12">
             <Input suffix="ios-search" placeholder="keywords" v-model="keyword" />
           </Col>
         </Row>
@@ -125,20 +132,29 @@
         <!-- <Table :data="uploadUsersPage" :colums="Usercolumns">
         </Table> -->
         <el-table :data="uploadUsersPage">
-          <el-table-column label="Username">
+          <el-table-column label="姓名">
             <template slot-scope="{row}">
               {{row[0]}}
             </template>
           </el-table-column>
-          <el-table-column label="Password">
+          <el-table-column label="学号">
             <template slot-scope="{row}">
               {{row[1]}}
             </template>
           </el-table-column>
-          <el-table-column label="Email">
+          <el-table-column label="年级">
             <template slot-scope="{row}">
               {{row[2]}}
             </template>
+          </el-table-column>
+          <el-table-column label="专业班级">
+            <template slot-scope="{row}">
+              {{row[3]}}
+            </template>
+          </el-table-column>
+          <el-table-column label="密码">
+          <template slot-scope="{row}">
+            {{row[4]}}</template>  
           </el-table-column>
         </el-table>
         <div class="panel-options">
@@ -169,7 +185,7 @@
         </div>
       </template>
     </Panel>
-
+<!-- 
     <Panel :title="$t('m.Generate_User')">
       <Form :model="formGenerateUser" ref="formGenerateUser">
         <Row type="flex" justify="space-between">
@@ -202,8 +218,8 @@
         </Row>
 
         <FormItem>
-          <!-- <el-button type="primary" @click="generateUser" icon="el-icon-fa-users" :loading="loadingGenerate">Generate & Export
-          </el-button> -->
+          <el-button type="primary" @click="generateUser" icon="el-icon-fa-users" :loading="loadingGenerate">Generate & Export
+          </el-button>
           <Button type="primary" @click="generateUser" :loading="loadingGenerate">Generate & Export</Button>
           <span class="userPreview" v-if="formGenerateUser.number_from && formGenerateUser.number_to &&
                                           formGenerateUser.number_from <= formGenerateUser.number_to">
@@ -217,7 +233,7 @@
           </span>
         </FormItem>
       </Form>
-    </Panel>
+    </Panel> -->
     <!--对话框-->
     <Modal :title="$t('m.User_Info')" v-model="showUserDialog" :closable="false">
       <Form :model="user" :label-width="120" label-position="left">
@@ -346,34 +362,46 @@
             key: 'id'
           },
           {
-            title: 'Username',
+            title: '姓名',
             key: 'username'
           },
           {
-            title: 'Create Time',
+            title: '创建时间',
             slot: 'creatTime',
             key: 'create_time'
           },
           {
-            title: 'Last Login',
+            title: '最后登录时间',
             slot: 'lastLogin',
             key: 'last_login'
           },
           {
-            title: 'Real Name',
-            key: 'real_name'
+            title: '学号',
+            key: 'user_student_number'
           },
           {
-            title: 'Email',
+            title: '年级',
+            key: 'user_student_grade'
+          },
+          {
+            title: '专业班级',
+            key: 'user_student_major'
+          },
+          // {
+          //   title: 'Real Name',
+          //   key: 'real_name'
+          // },
+          {
+            title: '邮箱',
             key: 'email'
           },
           {
-            title: 'User Type',
+            title: '用户类型',
             slot: 'userType',
             key: 'admin_type'
           },
           {
-            title: 'Option',
+            title: '操作',
             slot: 'option'
           }
         ],
@@ -397,6 +425,10 @@
       this.getUserList(1)
     },
     methods: {
+      // 切换用户类型
+      handleFilterManage () {
+        this.getUserList(1)
+      },
       // 切换页码回调
       currentChange (page) {
         this.currentPage = page
@@ -470,10 +502,9 @@
       handleUsersCSV (file) {
         papa.parse(file, {
           complete: (results) => {
-            debugger
             let data = results.data.filter(user => {
               // return user[0] && user[1] && user[2]
-              return user[0] && user[1]
+              return user[0] && user[1] && user[2] && user[3] && user[4]
             })
             let delta = results.data.length - data.length
             if (delta > 0) {

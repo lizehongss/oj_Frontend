@@ -110,6 +110,21 @@ export default [
         name: 'acm-helper',
         path: 'helper',
         component: Contest.ACMContestHelper
+      },
+      {
+        name: 'contest-choice',
+        path: 'choice',
+        component: Contest.ContestChoice
+      },
+      {
+        name: 'contest-blank',
+        path: 'blank',
+        component: Contest.ContestBlank
+      },
+      {
+        name: 'contest-blank-score',
+        path: 'score',
+        component: Contest.ContestChoiceandBlankScore
       }
     ]
   },

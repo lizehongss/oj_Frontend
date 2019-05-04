@@ -25,10 +25,11 @@
             <i-switch v-model="row.visible" @on-change="handleVisibleSwitch(row)"></i-switch>
           </template>
           <template slot-scope="{ row }" slot="operation">
-            <Button name="Edit" icon="ios-brush" @click.native="goEdit(row.id)"></Button>
-            <Button name="Problem" icon="md-list " @click.native="goContestProblemList(row.id)"></Button>
-            <Button name="Announcement" icon="ios-alert" @click.native="goContestAnnouncement(row.id)"></Button>
-            <Button name="Download Accepted Submissions" icon="md-cloud-download" @click.native="openDownloadOptions(row.id)"></Button>
+            <Button name="Edit" @click.native="goEdit(row.id)">编辑</Button>
+            <Button name="choice" @click="goContestChoiceList(row.id)">选择填空列表</Button>
+            <Button name="Problem"  @click.native="goContestProblemList(row.id)">程序列表</Button>
+            <Button name="Announcement"  @click.native="goContestAnnouncement(row.id)">公告内容</Button>
+            <!-- <Button name="Download Accepted Submissions"  @click.native="openDownloadOptions(row.id)">下载成绩</Button> -->
           </template>
       </Table>
       <!-- <el-table
@@ -184,7 +185,7 @@
           {
             title: 'Operation',
             slot: 'operation',
-            width: 250
+            width: 400
           }
         ]
       }
@@ -230,6 +231,9 @@
       },
       goContestProblemList (contestId) {
         this.$router.push({name: 'contest-problem-list', params: {contestId}})
+      },
+      goContestChoiceList (contestId) {
+        this.$router.push({name: 'contest-problem-choice', params: {contestId}})
       },
       handleVisibleSwitch (row) {
         api.editContest(row)

@@ -49,7 +49,7 @@
                   shape="circle"
                   @click="handleBtnClick('login')">{{$t('m.Login')}}
           </Button>
-          <Button v-if="website.allow_register"
+          <Button 
                   type="primary"
                   shape="circle"
                   @click="handleBtnClick('register')"

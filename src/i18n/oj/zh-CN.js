@@ -29,10 +29,10 @@ export const m = {
   // FAQ.vue
   Frequently_Asked_Questions: '常见问题',
   // ContestDetail.vue
-  Problems: '题目',
+  Problems: '程序题目',
   Announcements: '公告',
-  Submissions: '提交信息',
-  Rankings: 'Rank排名',
+  Submissions: '程序提交信息',
+  Rankings: '程序Rank排名',
   Overview: '概要',
   Admin_Helper: '管理员助手',
   // ContestProblemList.vue

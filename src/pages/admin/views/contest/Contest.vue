@@ -8,15 +8,10 @@
               <Input v-model="contest.title" :placeholder="$t('m.ContestTitle')"></Input>
             </FormItem>
           </Col>
-          <Col :span="24">
-            <FormItem :label="$t('m.ContestDescription')" required>
-              <!-- <Simditor v-model="contest.description"></Simditor> -->
-              <Editor ref="editor" v-model="contest.description" @on-change="handleChange"></Editor>
-            </FormItem>
-          </Col>
           <Col :span="8">
             <FormItem :label="$t('m.Contest_Start_Time')" required>
               <DatePicker
+              placement="bottom-end"
                 v-model="contest.start_time"
                 type="datetime"
                 :placeholder="$t('m.Contest_Start_Time')">
@@ -28,6 +23,7 @@
               <DatePicker
                 v-model="contest.end_time"
                 type="datetime"
+                :placement="bottom"
                 :placeholder="$t('m.Contest_End_Time')">
               </DatePicker>
             </FormItem>
@@ -74,6 +70,12 @@
                   </Col>
                 </Row>
               </div>
+            </FormItem>
+          </Col>
+                              <Col :span="24">
+            <FormItem :label="$t('m.ContestDescription')" required>
+              <!-- <Simditor v-model="contest.description"></Simditor> -->
+              <Editor ref="editor" v-model="contest.description" @on-change="handleChange"></Editor>
             </FormItem>
           </Col>
         </Row>

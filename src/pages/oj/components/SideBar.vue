@@ -5,10 +5,19 @@
         <Icon type="ios-home"></Icon>
         {{$t('m.Home')}}
       </Menu-item>
-      <Menu-item name="/problems">
+      <!-- <Menu-item name="/problems">
         <Icon type="ios-keypad"></Icon>
         {{$t('m.NavProblems')}}
-      </Menu-item>
+      </Menu-item> -->
+      <Submenu name="problem">
+        <template slot="title">
+          <Icon type="ios-keypad"></Icon>
+          {{$t('m.NavProblems')}}
+        </template>
+        <Menu-item name="/problems">程序练习</Menu-item>
+        <Menu-item name="/choiceproblem">选择题练习</Menu-item>
+        <Menu-item name="/blankproblem">填空题练习</Menu-item>
+      </Submenu>
       <Menu-item name="/contests">
         <Icon type="ios-trophy"></Icon>
         {{$t('m.Contests')}}

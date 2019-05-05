@@ -11,10 +11,14 @@ import {
   OIRank,
   Problem,
   ProblemList,
+  ChoiceList,
+  BlankList,
   ResetPassword,
   SubmissionDetails,
   SubmissionList,
-  UserHome
+  UserHome,
+  ChoiecDetail,
+  BlankDetail
 } from '../views'
 
 import * as Contest from '@oj/views/contest'
@@ -50,6 +54,30 @@ export default [
     path: '/problems',
     meta: {title: 'Problem List'},
     component: ProblemList
+  },
+  {
+    name: 'chocie-list',
+    path: '/choiceproblem',
+    meta: {title: 'Choice List'},
+    component: ChoiceList
+  },
+  {
+    name: 'blank-list',
+    path: '/blankproblem',
+    meta: {title: 'Blank List'},
+    component: BlankList
+  },
+  {
+    name: 'choice-details',
+    path: '/choice/:id',
+    meta: {title: 'Choice Details'},
+    component: ChoiecDetail
+  },
+  {
+    name: 'blank-details',
+    path: '/blank/:id',
+    meta: {title: 'Blank Details'},
+    component: BlankDetail
   },
   {
     name: 'problem-details',

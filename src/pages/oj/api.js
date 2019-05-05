@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import store from '@/store'
 import axios from 'axios'
+import utils from '@/utils/utils'
 
 Vue.prototype.$http = axios
 axios.defaults.baseURL = '/api'
@@ -273,12 +274,25 @@ export default {
     if (keyword) {
       params.keyword = keyword
     }
-    return ajax('contest/choice', 'get', {
+    return ajax('admin/contest/choice', 'get', {
       params: params
     })
   },
   getContestBlank (params) {
-    return ajax('contest/problemblank', 'get', {
+    return ajax('admin/contest/problemblank', 'get', {
+      params
+    })
+  },
+  getChoiceList (params) {
+    //
+    params = utils.filterEmptyValue(params)
+    return ajax('admin/contest/problemchoice', 'get', {
+      params
+    })
+  },
+  getBlankList (params) {
+    params = utils.filterEmptyValue(params)
+    return ajax('admin/contest/problemblank', 'get', {
       params
     })
   },

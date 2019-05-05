@@ -252,6 +252,5 @@
 <style lang="less" scoped>
 .view-choice{
   margin-bottom: 20px;
-
 }
 </style>

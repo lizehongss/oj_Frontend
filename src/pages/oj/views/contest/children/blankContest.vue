@@ -2,7 +2,7 @@
   <Panel>
       <div slot="title">填空题列表 <span style="fontSize: 15px">共{{total}}题， 1题4分</span></div>
       <div class="noData" v-if="hasanswer">已作题</div>
-      <div v-if="!showBlankList &&!hasanswer" class="noData">该实验无选择题</div>
+      <div v-if="!showBlankList &&!hasanswer" class="noData">该实验无填空题</div>
       <div v-if="showBlankList && !hasanswer">
       <div class="blank" v-for="(item, index) in blankList" :key="item.id" v-show="index === blankindex">
           <div class="choice-question">{{index+1 + '.' +item.question}}</div>

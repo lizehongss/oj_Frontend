@@ -82,6 +82,26 @@ export default new VueRouter({
           component: ProblemImportOrExport
         },
         {
+          path: '/choice',
+          name: 'choice-list',
+          component: ProblemList
+        },
+        {
+          path: '/choice/create',
+          name: 'create-choice',
+          component: ProblemList
+        },
+        {
+          path: '/blank',
+          name: 'blank-list',
+          component: ProblemList
+        },
+        {
+          path: '/blank/create',
+          name: 'create-blank',
+          component: ProblemList
+        },
+        {
           path: '/contest/create',
           name: 'create-contest',
           component: Contest

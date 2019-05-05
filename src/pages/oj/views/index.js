@@ -1,4 +1,6 @@
 import ProblemList from './problem/ProblemList.vue'
+import ChoiceList from './problem/choiceList.vue'
+import BlankList from './problem/blankList.vue'
 import Logout from './user/Logout.vue'
 import UserHome from './user/UserHome.vue'
 import About from './help/About.vue'
@@ -6,6 +8,8 @@ import FAQ from './help/FAQ.vue'
 import NotFound from './general/404.vue'
 import Home from './general/Home.vue'
 import Announcements from './general/Announcements.vue'
+import ChoiecDetail from './problem/choice.vue'
+import BlankDetail from './problem/blank.vue'
 
 // Grouping Components in the Same Chunk
 const SubmissionList = () => import(/* webpackChunkName: "submission" */ '@oj/views/submission/SubmissionList.vue')
@@ -22,10 +26,10 @@ const Problem = () => import(/* webpackChunkName: "Problem" */ '@oj/views/proble
 export {
   Home, NotFound, Announcements,
   Logout, UserHome, About, FAQ,
-  ProblemList, Problem,
+  ProblemList, Problem, ChoiceList, BlankList,
   ACMRank, OIRank,
   SubmissionList, SubmissionDetails,
-  ApplyResetPassword, ResetPassword
+  ApplyResetPassword, ResetPassword, ChoiecDetail, BlankDetail
 }
 /* 组件导出分为两类, 一类常用的直接导出，另一类诸如Login, Logout等用懒加载,懒加载不在此处导出
  *   在对应的route内加载

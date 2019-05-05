@@ -15,7 +15,16 @@
       <Menu-item name="/problems">{{$t('m.Problem_List')}}</Menu-item>
       <Menu-item name="/problem/create">{{$t('m.Create_Problem')}}</Menu-item>
       <Menu-item name="/problem/batch_ops">{{$t('m.Export_Import_Problem')}}</Menu-item>
-
+    </Submenu>
+    <Submenu name="choice" v-if="hasProblemPermission">
+      <template slot="title"><Icon type=""></Icon>选择题问题</template>
+      <Menu-item name="/choice">选择题列表</Menu-item>
+      <Menu-item name="/choice/create">创建选择题</Menu-item>
+    </Submenu>
+    <Submenu name="blank" v-if="hasProblemPermission">
+      <template slot="title"><Icon type=""></Icon>填空题问题</template>
+      <Menu-item name="/blank">填空题列表</Menu-item>
+      <Menu-item name="/blank/create">创建填空题</Menu-item>
     </Submenu>
     <Submenu name="contest">
       <template slot="title"><Icon type=""></Icon>{{$t('m.Contest')}}</template>
@@ -27,7 +36,6 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
-
   export default {
     name: 'SideMenu',
     data () {

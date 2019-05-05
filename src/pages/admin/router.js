@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // 引入 view 组件
-import { Announcement, Conf, Contest, ContestList, Home, JudgeServer, Login,
+import { Announcement, Conf, Contest, ContestList, Home, JudgeServer, Login, CreateChoice, CreateBlank,
   Problem, ProblemList, ChoiceList, User, PruneTestCase, Dashboard, ProblemImportOrExport, Help } from './views'
 Vue.use(VueRouter)
 
@@ -135,6 +135,16 @@ export default new VueRouter({
           path: '/contest/:contestId/problem/create',
           name: 'create-contest-problem',
           component: Problem
+        },
+        {
+          path: '/contest/:id/choice/create',
+          name: 'create-contest-choice',
+          component: CreateChoice
+        },
+        {
+          path: '/contest/:id/blank/create',
+          name: 'create-contest-blank',
+          component: CreateBlank
         },
         {
           path: '/contest/:contestId/problem/:problemId/edit',

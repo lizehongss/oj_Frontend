@@ -13,8 +13,10 @@ import Home from './Home.vue'
 import ProblemImportOrExport from './problem/ImportAndExport.vue'
 import ChoiceList from './contest/ChoiceList.vue'
 import Help from './general/help.vue'
+import CreateChoice from './problem/ChoiceProblem.vue'
+import CreateBlank from './problem/BlankProblem.vue'
 
 export {
   Announcement, User, Conf, JudgeServer, Problem, ProblemList, Contest,
-  ContestList, Login, Home, PruneTestCase, Dashboard, ProblemImportOrExport, ChoiceList, Help
+  ContestList, Login, Home, PruneTestCase, Dashboard, ProblemImportOrExport, ChoiceList, Help, CreateChoice, CreateBlank
 }

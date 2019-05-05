@@ -70,6 +70,10 @@
           :before-upload="handleUploadCsv">
         <el-button size="small" icon="el-icon-fa-upload" type="primary">上传选择题和填空</el-button>
         </el-upload>
+        <div style="marginTop: 20px">
+        <Button type="primary" @click.native="goCreateChoice">创建选择题</Button>
+        <Button type='primary' @click.native="goCreateBlank">创建填空题</Button>
+        </div>
      </Panel>
   </div>
 </template>
@@ -237,6 +241,12 @@
           })
         }, () => {
         })
+      },
+      goCreateChoice () {
+        this.$router.push({name: 'create-contest-choice', params: {id: this.contestId}})
+      },
+      goCreateBlank () {
+        this.$router.push({name: 'create-contest-blank', params: {id: this.contestId}})
       }
     },
     watch: {

@@ -15,8 +15,11 @@ import ChoiceList from './contest/ChoiceList.vue'
 import Help from './general/help.vue'
 import CreateChoice from './problem/ChoiceProblem.vue'
 import CreateBlank from './problem/BlankProblem.vue'
+import ChoicesList from './problem/ChoiceList.vue'
+import BlankList from './problem/BlankList.vue'
 
 export {
   Announcement, User, Conf, JudgeServer, Problem, ProblemList, Contest,
-  ContestList, Login, Home, PruneTestCase, Dashboard, ProblemImportOrExport, ChoiceList, Help, CreateChoice, CreateBlank
+  ContestList, Login, Home, PruneTestCase, Dashboard, ProblemImportOrExport, ChoiceList, Help, CreateChoice, CreateBlank,
+  ChoicesList, BlankList
 }

@@ -81,7 +81,7 @@ export default {
         offset: (page - 1) * this.blankPageSize,
         keyword: this.blankkeyword,
         //
-        contest_id: 1
+        contest_id: null
       }
       api.getBlankList(params).then(res => {
         this.loading = false

@@ -14,7 +14,7 @@ export default {
       type: String,
       default: ''
     },
-    valueType: {
+    type: {
       type: String,
       default: 'html',
       validator: (val) => {
@@ -55,7 +55,11 @@ export default {
     this.editor = new Editor(`#${this.editorId}`)
     this.editor.customConfig.onchange = (html) => {
     //   let text = this.editor.txt.text()
-      this.currentValue = html
+      if (this.type === 'html') {
+        this.currentValue = html
+      } else {
+        this.currentValue = this.editor.txt.text()
+      }
     //   if (this.cache) localStorage.editorCache = html
     //   this.$emit('input', this.valueType === 'html' ? html : text)
     //   this.$emit('on-change', html, text)
@@ -84,6 +88,6 @@ export default {
 
 <style lang="less" scoped>
 .editor-wrapper *{
-  z-index: 100 !important;
+  z-index: 1 !important;
 }
 </style>

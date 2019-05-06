@@ -48,7 +48,7 @@ export default {
         limit: 1000,
         offset: (page - 1) * 1000,
         //
-        contest_id: 1
+        contest_id: null
       }
       api.getContestBlank(params).then(res => {
         this.blankList = res.data.data.results

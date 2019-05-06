@@ -36,12 +36,6 @@
               <Radio label="C"></Radio>
               <Radio label="D"></Radio>
             </RadioGroup>
-                <!-- <Select class="difficulty-select" Splacement="bottom"  size="small" placeholder="请选择答案" v-model="problem.answer">
-                    <Option label="选项一" :value="problem.item1"></Option>
-                    <Option label="选项二" :value="problem.item2"></Option>
-                    <Option label="选项三" :value="problem.item3"></Option>
-                    <Option label="选项四" :value="problem.item4"></Option>
-                </Select> -->
             </FormItem>
             </Col>
         </Row>
@@ -78,7 +72,8 @@ export default {
         item1: '',
         item2: '',
         item3: '',
-        item4: ''
+        item4: '',
+        id: ''
       },
       title: ''
     }
@@ -87,6 +82,16 @@ export default {
     this.routeName = this.$route.name
     if (this.routeName === 'edit-choice' || this.routeName === 'edit-contest-choice') {
       this.mode = 'edit'
+      console.log(this.$route.query.question)
+      this.problem.question = this.$route.query.question
+      this.problem.id = this.$route.query.id
+      this.problem.item1 = this.$route.query.item1
+      this.problem.item2 = this.$route.query.item2
+      this.problem.item3 = this.$route.query.item3
+      this.problem.item4 = this.$route.query.item4
+      this.problem.answer = this.getAnswerShow(this.$route.query.answer)
+      this.problem.contest_id = this.$route.query.contest_id || null
+      console.log(this.problem.contest_id)
     } else {
       this.mode = 'add'
     }
@@ -101,6 +106,24 @@ export default {
     }
   },
   methods: {
+    getAnswerShow (ans) {
+      let result = ''
+      switch (ans) {
+        case this.problem.item1:
+          result = 'A'
+          break
+        case this.problem.item2:
+          result = 'B'
+          break
+        case this.problem.item3:
+          result = 'C'
+          break
+        case this.problem.item4:
+          result = 'D'
+          break
+      }
+      return result
+    },
     getAnswer (answer) {
       let ans = ''
       switch (answer) {
@@ -140,6 +163,24 @@ export default {
         list.push([this.problem.question, this.problem.answer, this.problem.item1, this.problem.item2, this.problem.item3, this.problem.item4])
         console.log(list)
         api.createContestChoice(list, null).then(res => {
+          if (this.routeName === 'create-contest-choice' || this.routeName === 'edit-contest-choice') {
+            this.$router.push({name: 'contest-problem-choice', params: {contestId: this.$route.params.id}})
+          } else {
+            this.$router.push({name: 'choice-list'})
+          }
+        })
+      }
+      if (this.routeName === 'edit-contest-choice') {
+        api.editContestChoice(this.problem).then(res => {
+          if (this.routeName === 'create-contest-choice' || this.routeName === 'edit-contest-choice') {
+            this.$router.push({name: 'contest-problem-choice', params: {contestId: this.$route.params.id}})
+          } else {
+            this.$router.push({name: 'choice-list'})
+          }
+        })
+      }
+      if (this.routeName === 'edit-choice') {
+        api.editChoice(this.problem).then(res => {
           if (this.routeName === 'create-contest-choice' || this.routeName === 'edit-contest-choice') {
             this.$router.push({name: 'contest-problem-choice', params: {contestId: this.$route.params.id}})
           } else {

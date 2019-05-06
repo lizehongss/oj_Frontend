@@ -19,6 +19,7 @@
          <Table :loading="loadingChoiceTable" @on-selection-change="handleSelectionChoiceChange" ref="choiceTable" :data="choiceList" :columns="choiceColumns">
            <template slot-scope="{ row }" slot="operation">
              <Button type="text" @click="deletechoice(row.id)" name="delete">删除</Button>
+             <Button type="text" @click="handleEditchoice(row)" name="Edit">编辑</Button>
            </template>
          </Table>
          <div class="panel-options">
@@ -144,6 +145,9 @@
       },
       goCreateChoice () {
         this.$router.push({name: 'create-choice'})
+      },
+      handleEditchoice (row) {
+        this.$router.push({name: 'edit-choice', query: {question: row.question, id: row.id, answer: row.answer, item1: row.item1, item2: row.item2, item3: row.item3, item4: row.item4}})
       }
     },
     watch: {

@@ -142,6 +142,26 @@ export default new VueRouter({
           component: CreateChoice
         },
         {
+          path: '/contest/choice/edit',
+          name: 'edit-contest-choice',
+          component: CreateChoice
+        },
+        {
+          path: '/contest/blank/edit',
+          name: 'edit-contest-blank',
+          component: CreateBlank
+        },
+        {
+          path: '/blank/edit',
+          name: 'edit-blank',
+          component: CreateBlank
+        },
+        {
+          path: '/choice/edit',
+          name: 'edit-choice',
+          component: CreateChoice
+        },
+        {
           path: '/contest/:id/blank/create',
           name: 'create-contest-blank',
           component: CreateBlank

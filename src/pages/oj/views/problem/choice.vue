@@ -62,7 +62,7 @@ export default {
       let params = {
         limit: 1000,
         offset: (page - 1) * 1000,
-        contest_id: 1
+        contest_id: null
       }
       api.getContestChoice(params).then(res => {
         this.choiceList = res.data.data.results

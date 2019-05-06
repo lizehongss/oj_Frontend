@@ -20,6 +20,7 @@
          <Table :loading="loadingblankTable" @on-selection-change="handleSelectionBlankChange" ref="blankTable" :data="blankList" :columns="blankColumns">
            <template slot-scope="{row}" slot="operation">
              <Button type="text" @click="deleteblank(row.id)">删除</Button>
+             <Button type="text" @click="handleEditBlank(row)" name="Edit">编辑</Button>
            </template>
          </Table>
        </div>
@@ -187,6 +188,9 @@
       },
       goCreateBlank () {
         this.$router.push({name: 'create-blank'})
+      },
+      handleEditBlank (row) {
+        this.$router.push({name: 'edit-blank', query: {question: row.question, id: row.id, answer: row.answer}})
       }
     },
     watch: {

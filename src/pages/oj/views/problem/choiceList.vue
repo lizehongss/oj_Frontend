@@ -80,7 +80,7 @@ export default {
         offset: (page - 1) * this.choicePageSize,
         Keyword: this.choicekeyword,
         //
-        contest_id: 1
+        contest_id: null
       }
       api.getChoiceList(params).then(res => {
         this.loading = false

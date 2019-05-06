@@ -39,7 +39,8 @@ export default {
       problem: {
         question: '',
         answer: '',
-        contest_id: ''
+        contest_id: '',
+        id: ''
       },
       title: ''
     }
@@ -48,6 +49,10 @@ export default {
     this.routeName = this.$route.name
     if (this.routeName === 'edit-blank' || this.routeName === 'edit-contest-blank') {
       this.mode = 'edit'
+      this.problem.question = this.$route.query.question
+      this.problem.contest_id = this.$route.query.contest_id || null
+      this.problem.answer = this.$route.query.answer
+      this.problem.id = this.$route.query.id
     } else {
       this.mode = 'add'
     }

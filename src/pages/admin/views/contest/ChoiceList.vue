@@ -20,6 +20,7 @@
          <Table :loading="loadingChoiceTable" @on-selection-change="handleSelectionChoiceChange" ref="choiceTable" :data="choiceList" :columns="choiceColumns">
            <template slot-scope="{ row }" slot="operation">
              <Button type="text" @click="deletechoice(row.id)" name="delete">删除</Button>
+             <Button type="text" @click="handleEdit(row)" name="Edit">编辑</Button>
            </template>
          </Table>
          <div class="panel-options">
@@ -50,6 +51,7 @@
          <Table :loading="loadingblankTable" @on-selection-change="handleSelectionBlankChange" ref="blankTable" :data="blankList" :columns="blankColumns">
            <template slot-scope="{row}" slot="operation">
              <Button type="text" @click="deleteblank(row.id)">删除</Button>
+             <Button type="text" @click="handleEditBlank(row)" name="Edit">编辑</Button>
            </template>
          </Table>
        </div>
@@ -247,6 +249,12 @@
       },
       goCreateBlank () {
         this.$router.push({name: 'create-contest-blank', params: {id: this.contestId}})
+      },
+      handleEdit (row) {
+        this.$router.push({name: 'edit-contest-choice', query: {contest_id: this.contestId, question: row.question, id: row.id, answer: row.answer, item1: row.item1, item2: row.item2, item3: row.item3, item4: row.item4}})
+      },
+      handleEditBlank (row) {
+        this.$router.push({name: 'edit-contest-blank', query: {contest_id: this.contestId, question: row.question, id: row.id, answer: row.answer}})
       }
     },
     watch: {

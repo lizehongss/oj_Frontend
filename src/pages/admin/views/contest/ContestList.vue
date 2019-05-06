@@ -153,13 +153,17 @@
         currentId: 1,
         downloadDialogVisible: false,
         columns: [
-          {
-            type: 'expand',
-            width: 50
-          },
+          // {
+          //   type: 'expand',
+          //   width: 50
+          // },
           {
             title: 'ID',
             key: 'id'
+          },
+          {
+            title: 'title',
+            key: 'title'
           },
           {
             title: 'Rule Type',

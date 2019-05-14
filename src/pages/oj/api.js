@@ -265,7 +265,7 @@ export default {
     })
   },
   getContestChoice (params) {
-    return ajax('admin/contest/problemchoice', 'get', {
+    return ajax('contest/problemchoice', 'get', {
       params
     })
   },
@@ -274,35 +274,35 @@ export default {
     if (keyword) {
       params.keyword = keyword
     }
-    return ajax('admin/contest/choice', 'get', {
+    return ajax('contest/choicescore', 'get', {
       params: params
     })
   },
   getContestBlank (params) {
-    return ajax('admin/contest/problemblank', 'get', {
+    return ajax('contest/problemblank', 'get', {
       params
     })
   },
   getChoiceList (params) {
     //
     params = utils.filterEmptyValue(params)
-    return ajax('admin/contest/problemchoice', 'get', {
+    return ajax('contest/problemchoice', 'get', {
       params
     })
   },
   getBlankList (params) {
     params = utils.filterEmptyValue(params)
-    return ajax('admin/contest/problemblank', 'get', {
+    return ajax('contest/problemblank', 'get', {
       params
     })
   },
   postChoiceScore (data) {
-    return ajax('admin/contest/choice', 'post', {
+    return ajax('contest/choicescore', 'post', {
       data
     })
   },
   postBlankScore (data) {
-    return ajax('admin/contest/Blank', 'post', {
+    return ajax('contest/Blank', 'post', {
       data
     })
   }

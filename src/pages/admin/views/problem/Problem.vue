@@ -220,7 +220,7 @@
           </Col>
 
           <Col :span="24">
-            <Table :data="problem.test_case_score"
+            <!-- <Table :data="problem.test_case_score"
                    style="width: 100%"
                    :columns="columns"
             >
@@ -230,8 +230,8 @@
                      v-model="row.score"
                      :disabled="problem.rule_type !=='OI'"></Input>
             </template>
-            </Table>
-            <!-- <el-table
+            </Table> -->
+            <el-table
               :data="problem.test_case_score"
               style="width: 100%">
               <el-table-column
@@ -254,7 +254,7 @@
                   </Input>
                 </template>
               </el-table-column>
-            </el-table> -->
+            </el-table>
           </Col>
         </Row>
         <FormItem :label="$t('m.Source')" :style="{marginTop: 20 + 'px'}">
@@ -660,5 +660,6 @@
     max-width: 80%;
     overflow-x: scroll;
   }
+  
 </style>
 

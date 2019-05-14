@@ -3,7 +3,7 @@
     <div id="problem-main">
       <Tabs value="one" @on-click="showCodeMirror">
         <Button type="primary"  icon="ios-arrow-back" @click="goBack" slot="extra"></Button>
-        <TabPane label="题目详情" name="one">
+      <TabPane label="题目详情" name="one">
       <Panel :padding="40" shadow>
         <div slot="title">{{problem.title}}</div>
         <div id="problem-content" class="markdown-body" v-katex>
@@ -570,7 +570,9 @@
   }
 
   .flex-container {
+    width: 100%;
     #problem-main {
+      width: 100%;
       flex: auto;
       margin-right: 18px;
       .tab_left, .tab_right {

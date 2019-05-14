@@ -48,7 +48,7 @@
       :total="total"
       class="page"
       :page-size="limit"
-      @on-change="uploadUsersCurrentPage">
+      @on-change="getPublicProblem">
     </Page>
   </div>
 </template>

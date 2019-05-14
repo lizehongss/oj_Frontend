@@ -267,6 +267,16 @@ export default {
       }
     })
   },
+  editChoice (data) {
+    return ajax('admin/contest/problemchoice', 'put', {
+      data
+    })
+  },
+  editBlank (data) {
+    return ajax('admin/contest/problemblank', 'put', {
+      data
+    })
+  },
   createContestBlank (list, _id) {
     return ajax('admin/contest/problemblank', 'post', {
       data: {

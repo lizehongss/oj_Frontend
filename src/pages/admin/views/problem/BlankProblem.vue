@@ -99,6 +99,15 @@ export default {
           }
         })
       }
+      if (this.routeName === 'edit-contest-blank' || this.routeName === 'edit-blank') {
+        api.editBlank(this.problem).then(res => {
+          if (this.routeName === 'create-contest-blank' || this.routeName === 'edit-contest-blank') {
+            this.$router.push({name: 'contest-list', params: {contestId: this.$route.params.id}})
+          } else {
+            this.$router.push({name: 'blank-list'})
+          }
+        })
+      }
     }
   }
 }

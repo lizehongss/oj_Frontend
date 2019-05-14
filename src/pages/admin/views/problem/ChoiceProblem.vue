@@ -171,7 +171,8 @@ export default {
         })
       }
       if (this.routeName === 'edit-contest-choice') {
-        api.editContestChoice(this.problem).then(res => {
+        console.log(this.problem)
+        api.editChoice(this.problem).then(res => {
           if (this.routeName === 'create-contest-choice' || this.routeName === 'edit-contest-choice') {
             this.$router.push({name: 'contest-problem-choice', params: {contestId: this.$route.params.id}})
           } else {
@@ -182,7 +183,7 @@ export default {
       if (this.routeName === 'edit-choice') {
         api.editChoice(this.problem).then(res => {
           if (this.routeName === 'create-contest-choice' || this.routeName === 'edit-contest-choice') {
-            this.$router.push({name: 'contest-problem-choice', params: {contestId: this.$route.params.id}})
+            this.$router.push({name: 'contest-list', params: {contestId: this.$route.params.id}})
           } else {
             this.$router.push({name: 'choice-list'})
           }

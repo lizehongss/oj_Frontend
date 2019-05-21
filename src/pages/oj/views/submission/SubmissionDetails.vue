@@ -21,9 +21,15 @@
     <Col v-if="submission.info && !isCE" :span="20">
       <Table stripe :loading="loading" :disabled-hover="true" :columns="columns" :data="submission.info.data"></Table>
     </Col>
-
     <Col :span="20">
-      <Highlight :code="submission.code" :language="submission.language" :border-color="status.color"></Highlight>
+      <Tabs value="one">
+        <TabPane label="提交代码" name="one">
+          <Highlight :code="submission.code" :language="submission.language" :border-color="status.color"></Highlight>
+        </TabPane>
+        <TabPane label="运行输出" name="two">
+          <Highlight :code="codeOutput" :language="submission.language" :border-color="status.color"></Highlight>
+        </TabPane>
+      </Tabs>
     </Col>
     <Col v-if="submission.can_unshare" :span="20">
       <div id="share-btn">
@@ -171,6 +177,13 @@
       },
       isAdminRole () {
         return this.$store.getters.isAdminRole
+      },
+      codeOutput () {
+        if (this.submission.info.data[0]) {
+          return this.submission.info.data[0].output
+        } else {
+          return '无运行结果'
+        }
       }
     }
   }
